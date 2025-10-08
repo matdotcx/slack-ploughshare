@@ -1,0 +1,65 @@
+# Slack Channel Analytics Configuration
+# Customise thresholds and behaviour for channel cleanup analysis
+
+analysis:
+  # Days of inactivity thresholds for categorising channels
+  days_dormant: 30        # Channels inactive for this many days are "dormant"
+  days_very_old: 180      # Channels inactive for this many days are "very old"
+
+  # Include private channels in analysis (requires groups:read scope)
+  include_private_channels: true
+
+cleanup:
+  # Which categories to include in cleanup recommendations
+  # Set to true to include in cleanup candidates
+  include_very_old: true   # Channels with 180+ days of inactivity
+  include_dormant: true    # Channels with 30-180 days of inactivity
+  include_never_used: true # Channels with zero messages ever
+
+  # Send warning message before archiving
+  send_warning: true
+  warning_days_before_archive: 30
+  warning_message: |
+    This channel has been inactive for a long time and is scheduled for archival.
+
+    If this channel is still in use or contains important information, please react with a thumbs up (👍) or post a message within the next 30 days to keep it active.
+
+    Inactive channels will be archived on {archive_date} to help keep our workspace organised.
+
+output:
+  # Report settings
+  report_file: "channel_analysis.json"
+
+  # CSV export settings
+  export_csv: true
+  csv_file: "channel_analysis.csv"
+
+  # How many top channels to show in summary (0 = show all)
+  summary_limit: 15
+
+  # Show member counts in output
+  show_member_count: true
+
+  # Show last message date in output
+  show_last_message_date: true
+
+logging:
+  # Verbose output
+  verbose: false
+
+  # Show rate limit warnings
+  show_rate_limits: true
+
+  # Progress updates every N channels
+  progress_interval: 50
+
+rate_limiting:
+  # Delay between API calls in milliseconds (default: 100ms = 0.1s)
+  # Slack allows ~60 requests per minute, so 100ms delay is conservative
+  delay_between_requests_ms: 100
+
+  # Enable smart rate limiting (respects Slack's rate limit headers)
+  smart_rate_limiting: true
+
+  # Maximum retries on rate limit errors
+  max_retries: 5
