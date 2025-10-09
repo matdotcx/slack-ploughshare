@@ -160,13 +160,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "[INFO] No state changes to commit"
           else
-            git commit -m "Update state from workflow run ${{ github.run_number }}
-
-Command: ${{ steps.determine-command.outputs.command }}
-Mode: ${{ steps.determine-command.outputs.mode }}
-Triggered: ${{ github.event_name }}
-Run: ${{ github.run_id }}"
-
+            git commit -m "Update state from workflow run #${{ github.run_number }}"
             git push origin main
             echo "[INFO] State committed and pushed to repository"
           fi
