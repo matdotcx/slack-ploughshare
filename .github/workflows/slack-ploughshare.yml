@@ -1,15 +1,31 @@
-name: Slack Ploughshare Weekly Automation
+name: Slack Ploughshare
 
 on:
+  # Scheduled automation - runs weekly
   schedule:
-    # Weekly schedule (configurable)
-    # Default: Every Monday at 1 AM, 9 AM, and 5 PM UTC
-    # Adjust these cron expressions to match your timezone
     - cron: '0 1 * * 1'   # Auto-warn: Monday 1 AM UTC
     - cron: '0 9 * * 1'   # Check reactions: Monday 9 AM UTC
     - cron: '0 17 * * 1'  # Auto-archive: Monday 5 PM UTC
 
-  # Allow manual trigger for testing
+  # Allow other workflows to call this one
+  workflow_call:
+    inputs:
+      command:
+        description: 'Command to run'
+        required: true
+        type: string
+      dry_run:
+        description: 'Dry run mode'
+        required: false
+        type: boolean
+        default: true
+      additional_flags:
+        description: 'Additional flags (e.g., --force-warnings --limit 100)'
+        required: false
+        type: string
+        default: ''
+
+  # Advanced manual trigger with full control
   workflow_dispatch:
     inputs:
       command:
@@ -21,14 +37,23 @@ on:
           - check-reactions
           - auto-archive
           - warning-report
+          - send-warnings
       dry_run:
-        description: 'Dry run mode (true = dry run, false = execute for real)'
+        description: 'Execution mode'
         required: true
-        type: boolean
-        default: true
+        type: choice
+        options:
+          - 'Dry Run (test only, no changes)'
+          - 'Execute For Real (makes actual changes)'
+        default: 'Dry Run (test only, no changes)'
+      additional_flags:
+        description: 'Additional flags (optional: --force-warnings, --limit N)'
+        required: false
+        type: string
+        default: ''
 
 jobs:
-  slack-automation:
+  run-slack-ploughshare:
     runs-on: ubuntu-latest
 
     steps:
@@ -74,38 +99,59 @@ jobs:
         id: determine-command
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            # Manual trigger
+            # Manual trigger - advanced mode
             COMMAND="${{ inputs.command }}"
-            if [ "${{ inputs.dry_run }}" = "true" ]; then
-              DRY_RUN=""
-            else
+            if [[ "${{ inputs.dry_run }}" == *"Execute For Real"* ]]; then
               DRY_RUN="--for-real"
+              MODE="EXECUTE"
+            else
+              DRY_RUN=""
+              MODE="DRY RUN"
             fi
+            ADDITIONAL="${{ inputs.additional_flags }}"
+          elif [ "${{ github.event_name }}" = "workflow_call" ]; then
+            # Called by another workflow
+            COMMAND="${{ inputs.command }}"
+            if [ "${{ inputs.dry_run }}" = "false" ]; then
+              DRY_RUN="--for-real"
+              MODE="EXECUTE"
+            else
+              DRY_RUN=""
+              MODE="DRY RUN"
+            fi
+            ADDITIONAL="${{ inputs.additional_flags }}"
           else
             # Scheduled trigger - determine based on hour
             HOUR=$(date -u +%H)
             if [ "$HOUR" = "01" ]; then
               COMMAND="auto-warn"
               DRY_RUN="--for-real"
+              MODE="EXECUTE"
             elif [ "$HOUR" = "09" ]; then
               COMMAND="check-reactions"
               DRY_RUN=""
+              MODE="EXECUTE"
             elif [ "$HOUR" = "17" ]; then
               COMMAND="auto-archive"
               DRY_RUN="--for-real"
+              MODE="EXECUTE"
             else
               COMMAND="warning-report"
               DRY_RUN=""
+              MODE="VIEW"
             fi
+            ADDITIONAL=""
           fi
 
           echo "command=$COMMAND" >> $GITHUB_OUTPUT
           echo "dry_run=$DRY_RUN" >> $GITHUB_OUTPUT
-          echo "Running: python slack_channel_analytics.py --$COMMAND $DRY_RUN"
+          echo "additional=$ADDITIONAL" >> $GITHUB_OUTPUT
+          echo "mode=$MODE" >> $GITHUB_OUTPUT
+          echo "[$MODE] Running: python slack_channel_analytics.py --$COMMAND $DRY_RUN $ADDITIONAL"
 
       - name: Run Slack Ploughshare
         run: |
-          python slack_channel_analytics.py --${{ steps.determine-command.outputs.command }} ${{ steps.determine-command.outputs.dry_run }}
+          python slack_channel_analytics.py --${{ steps.determine-command.outputs.command }} ${{ steps.determine-command.outputs.dry_run }} ${{ steps.determine-command.outputs.additional }}
 
       - name: Upload warning tracker artifact
         uses: actions/upload-artifact@v4
@@ -114,6 +160,7 @@ jobs:
           name: warning-tracker
           path: channel_warnings.json
           retention-days: 90
+          overwrite: true
 
       - name: Upload channel analysis artifact
         uses: actions/upload-artifact@v4
@@ -124,6 +171,7 @@ jobs:
             channel_analysis.json
             channel_analysis.csv
           retention-days: 30
+          overwrite: true
 
       - name: Upload logs
         uses: actions/upload-artifact@v4
@@ -139,7 +187,10 @@ jobs:
           echo "## Slack Ploughshare Execution Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Command:** \`${{ steps.determine-command.outputs.command }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "**Mode:** ${{ steps.determine-command.outputs.dry_run == '' && 'Execute' || 'Dry Run' }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Mode:** \`${{ steps.determine-command.outputs.mode }}\`" >> $GITHUB_STEP_SUMMARY
+          if [ -n "${{ steps.determine-command.outputs.additional }}" ]; then
+            echo "**Additional Flags:** \`${{ steps.determine-command.outputs.additional }}\`" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
@@ -148,15 +199,26 @@ jobs:
             echo "### Warning Tracker Status" >> $GITHUB_STEP_SUMMARY
             python -c "
           import json
+          from datetime import datetime
+
           with open('channel_warnings.json') as f:
               data = json.load(f)
-              total = len(data.get('channels', {}))
-              warned = sum(1 for c in data.get('channels', {}).values() if c.get('status') == 'warned')
-              saved = sum(1 for c in data.get('channels', {}).values() if c.get('status') == 'saved')
-              archived = sum(1 for c in data.get('channels', {}).values() if c.get('status') == 'archived')
+              channels = data.get('channels', {})
+              total = len(channels)
+              warned = sum(1 for c in channels.values() if c.get('status') == 'warned')
+              saved = sum(1 for c in channels.values() if c.get('status') == 'saved')
+              archived = sum(1 for c in channels.values() if c.get('status') == 'archived')
+
+              # Count ready for archive
+              now = datetime.now()
+              ready = sum(1 for c in channels.values()
+                         if c.get('status') == 'warned'
+                         and datetime.fromisoformat(c['archive_scheduled_for']) <= now)
+
               print(f'- **Total tracked:** {total}')
               print(f'- **Currently warned:** {warned}')
+              print(f'- **Ready for archive:** {ready}')
               print(f'- **Saved by reactions:** {saved}')
-              print(f'- **Archived:** {archived}')
+              print(f'- **Already archived:** {archived}')
           " >> $GITHUB_STEP_SUMMARY || echo "No warning data available" >> $GITHUB_STEP_SUMMARY
           fi

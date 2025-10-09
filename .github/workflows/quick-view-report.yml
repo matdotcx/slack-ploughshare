@@ -1,0 +1,13 @@
+name: "View: Warning Report"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  view-report:
+    uses: ./.github/workflows/slack-ploughshare.yml
+    secrets: inherit
+    with:
+      command: 'warning-report'
+      dry_run: true
+      additional_flags: ''

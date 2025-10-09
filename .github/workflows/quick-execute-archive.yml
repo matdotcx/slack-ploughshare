@@ -1,0 +1,37 @@
+name: "Execute: Archive Channels"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "CONFIRM" to archive channels past warning period'
+        required: true
+        type: string
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      confirmed: ${{ steps.check.outputs.confirmed }}
+    steps:
+      - name: Validate confirmation
+        id: check
+        run: |
+          if [ "${{ inputs.confirm }}" = "CONFIRM" ]; then
+            echo "confirmed=true" >> $GITHUB_OUTPUT
+            echo "Confirmation received - proceeding with archive execution"
+          else
+            echo "confirmed=false" >> $GITHUB_OUTPUT
+            echo "ERROR: Must type CONFIRM to proceed"
+            exit 1
+          fi
+
+  execute-archive:
+    needs: validate
+    if: needs.validate.outputs.confirmed == 'true'
+    uses: ./.github/workflows/slack-ploughshare.yml
+    secrets: inherit
+    with:
+      command: 'auto-archive'
+      dry_run: false
+      additional_flags: ''

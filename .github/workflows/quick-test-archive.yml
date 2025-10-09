@@ -1,0 +1,13 @@
+name: "Test: Dry Run Archive"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-archive:
+    uses: ./.github/workflows/slack-ploughshare.yml
+    secrets: inherit
+    with:
+      command: 'auto-archive'
+      dry_run: true
+      additional_flags: ''

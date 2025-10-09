@@ -1,0 +1,13 @@
+name: "Test: Dry Run Warnings"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-warnings:
+    uses: ./.github/workflows/slack-ploughshare.yml
+    secrets: inherit
+    with:
+      command: 'auto-warn'
+      dry_run: true
+      additional_flags: ''

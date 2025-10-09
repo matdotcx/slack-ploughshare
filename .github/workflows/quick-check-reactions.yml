@@ -1,0 +1,13 @@
+name: "Check: User Reactions"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-reactions:
+    uses: ./.github/workflows/slack-ploughshare.yml
+    secrets: inherit
+    with:
+      command: 'check-reactions'
+      dry_run: true
+      additional_flags: ''

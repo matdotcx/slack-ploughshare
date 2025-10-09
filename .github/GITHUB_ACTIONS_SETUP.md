@@ -99,30 +99,48 @@ git push
 
 ### 6. Test It Out
 
-**Manual Test Run:**
+You now have a **single pane of glass** in the Actions tab with quick-action buttons for common tasks!
+
+**Available Quick Actions:**
+
+In the Actions tab, you'll see these workflows:
+
+- **View: Warning Report** - See current status (safe, read-only)
+- **Check: User Reactions** - Check for thumbs up on warnings (safe, read-only)
+- **Test: Dry Run Warnings** - Test warning system without sending (safe)
+- **Test: Dry Run Archive** - Test archive system without archiving (safe)
+- **Execute: Send Warnings** - Actually send warnings (requires CONFIRM)
+- **Execute: Archive Channels** - Actually archive channels (requires CONFIRM)
+- **Slack Ploughshare** - Advanced mode with full control
+
+**Quick Start Testing:**
 
 1. Go to **Actions** tab
-2. Click **"Slack Ploughshare Weekly Automation"** in the left sidebar
+2. Click **"View: Warning Report"** in the left sidebar
 3. Click **"Run workflow"** button (top right)
-4. Fill in the form:
-   - **Command:** `warning-report`
-   - **Dry run mode:** `true`
-5. Click **"Run workflow"**
-6. Click on the workflow run to see progress
-7. Check the summary for statistics
+4. Click **"Run workflow"** to confirm
+5. Wait for completion and check the summary
 
-**Test with actual warning (safe):**
+**Test Warning System (Safe):**
 
-1. Run workflow again
-2. **Command:** `auto-warn`
-3. **Dry run mode:** `true` (keeps it safe)
-4. Review the logs to see what would happen
+1. Click **"Test: Dry Run Warnings"**
+2. Click **"Run workflow"**
+3. Review logs to see what would happen
+4. No actual warnings are sent
 
-**When ready to go live:**
+**When Ready to Go Live:**
 
-1. Run workflow
-2. **Command:** `auto-warn`
-3. **Dry run mode:** `false` (will actually send warnings)
+1. Click **"Execute: Send Warnings"**
+2. Type `CONFIRM` in the confirmation box
+3. Click **"Run workflow"**
+4. Warnings will be sent to inactive channels
+
+**For Advanced Control:**
+
+Use **"Slack Ploughshare"** workflow with full options:
+- Choose any command
+- Select dry run or execute
+- Add additional flags like `--force-warnings` or `--limit 100`
 
 ## How State is Maintained
 

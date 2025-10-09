@@ -230,11 +230,28 @@ You can run Slack Ploughshare in two ways:
 
 ### How It Works
 
+**Single Pane of Glass:**
+GitHub Actions provides one interface for all operations:
+- **Quick Actions** - One-click buttons for common tasks
+- **Safe Testing** - Dry-run modes test without making changes
+- **Confirmation Required** - Execute actions require typing "CONFIRM"
+- **Full Control** - Advanced mode with all options and flags
+
+**Available Quick Actions:**
+- `View: Warning Report` - See current status (read-only)
+- `Check: User Reactions` - Check for thumbs up reactions (read-only)
+- `Test: Dry Run Warnings` - Test warning system safely
+- `Test: Dry Run Archive` - Test archive system safely
+- `Execute: Send Warnings` - Send warnings (requires CONFIRM)
+- `Execute: Archive Channels` - Archive channels (requires CONFIRM)
+- `Slack Ploughshare` - Advanced mode with full options
+
 **Automated Schedule:**
 - Runs weekly on configured days/times
 - Automatically persists state using GitHub Artifacts
-- `channel_warnings.json` stored between runs
+- `channel_warnings.json` stored between runs (90 days)
 - Logs available for 14 days
+- No manual intervention needed once configured
 
 **State Persistence:**
 - Warning tracker stored as artifact (90 day retention)
@@ -242,10 +259,11 @@ You can run Slack Ploughshare in two ways:
 - Uploaded after each run
 - Maintains 30-day warning periods across executions
 
-**Manual Testing:**
-- Use workflow_dispatch to test anytime
-- Choose any command (auto-warn, check-reactions, auto-archive, warning-report)
-- Dry run mode available for safe testing
+**Safety Features:**
+- Dry-run by default for manual triggers
+- Execute actions require typing "CONFIRM"
+- Full execution logs and summaries
+- Artifact history for rollback if needed
 
 ### Monitoring
 
