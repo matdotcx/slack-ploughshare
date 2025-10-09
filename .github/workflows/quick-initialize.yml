@@ -41,8 +41,8 @@ jobs:
         run: |
           echo "[INFO] Removing old state files for fresh analysis..."
           rm -f state/channel_analysis.* 2>/dev/null || true
-          echo "[INFO] Running analysis (first 50 channels for testing)..."
-          python slack_channel_analytics.py --limit 50
+          echo "[INFO] Running FULL workspace analysis (all 1538 channels)..."
+          python slack_channel_analytics.py
           echo "[INFO] Analysis complete - checking files..."
           ls -lh state/channel_*.json state/channel_*.csv 2>/dev/null || echo "[WARNING] Analysis files not found"
 
