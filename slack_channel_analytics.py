@@ -926,6 +926,10 @@ class ChannelAnalyzer:
         print("[INFO] Step 3: Categorizing inactive channels...")
         categories = self.categorize_channels()
 
+        # Save analysis report (even in dry run mode)
+        print("[INFO] Step 3.5: Saving analysis report...")
+        report, _ = self.generate_report()
+
         # Get channels eligible for warning
         to_warn = (
             categories["very_old"] + categories["dormant"] + categories["never_used"]
