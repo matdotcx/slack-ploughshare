@@ -39,7 +39,9 @@ jobs:
         run: |
           echo "[INFO] Running initial channel analysis to create baseline data..."
           python slack_channel_analytics.py --limit 10
-          echo "[INFO] Analysis complete - artifacts will be uploaded"
+          echo "[INFO] Analysis complete - checking files..."
+          ls -lh channel_*.json channel_*.csv 2>/dev/null || echo "[WARNING] Analysis files not found"
+          echo "[INFO] Artifacts will be uploaded"
 
       - name: Upload warning tracker artifact
         uses: actions/upload-artifact@v4
@@ -60,6 +62,7 @@ jobs:
             channel_analysis.csv
           retention-days: 30
           overwrite: true
+          if-no-files-found: warn
 
       - name: Generate summary
         if: always()
