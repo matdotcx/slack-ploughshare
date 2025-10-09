@@ -1,0 +1,83 @@
+name: "Initialize: First Run Setup"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  initialize:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install slack-sdk python-dotenv pyyaml
+
+      - name: Configure environment
+        run: |
+          echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" > .env
+          mkdir -p logs
+
+      - name: Initialize warning tracker
+        run: |
+          python3 -c "
+          from slack_channel_analytics import WarningTracker
+          tracker = WarningTracker()
+          print('[INFO] Warning tracker initialized')
+          print(f'[INFO] File created: channel_warnings.json')
+          "
+
+      - name: Run initial channel analysis
+        run: |
+          echo "[INFO] Running initial channel analysis to create baseline data..."
+          python slack_channel_analytics.py --limit 10
+          echo "[INFO] Analysis complete - artifacts will be uploaded"
+
+      - name: Upload warning tracker artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: warning-tracker
+          path: channel_warnings.json
+          retention-days: 90
+          overwrite: true
+
+      - name: Upload channel analysis artifact
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: channel-analysis
+          path: |
+            channel_analysis.json
+            channel_analysis.csv
+          retention-days: 30
+          overwrite: true
+
+      - name: Generate summary
+        if: always()
+        run: |
+          echo "## Initialization Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Warning tracker initialized" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Initial channel analysis completed (first 10 channels)" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Artifacts uploaded for state persistence" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### What was created:" >> $GITHUB_STEP_SUMMARY
+          echo "- \`channel_warnings.json\` - Empty warning tracker" >> $GITHUB_STEP_SUMMARY
+          echo "- \`channel_analysis.json\` - Sample analysis data" >> $GITHUB_STEP_SUMMARY
+          echo "- \`channel_analysis.csv\` - Sample analysis data (CSV)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Run **Test: Dry Run Warnings** to see what would be warned" >> $GITHUB_STEP_SUMMARY
+          echo "2. Review the output and adjust configuration if needed" >> $GITHUB_STEP_SUMMARY
+          echo "3. When ready, run **Execute: Send Warnings** to start tracking" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
