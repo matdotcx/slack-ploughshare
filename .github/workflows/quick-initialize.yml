@@ -39,6 +39,8 @@ jobs:
 
       - name: Run initial channel analysis
         run: |
+          echo "[INFO] Removing old state files for fresh analysis..."
+          rm -f state/channel_analysis.* 2>/dev/null || true
           echo "[INFO] Running full channel analysis (all channels)..."
           python slack_channel_analytics.py
           echo "[INFO] Analysis complete - checking files..."
