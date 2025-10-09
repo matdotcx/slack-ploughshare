@@ -159,9 +159,15 @@ class WarningTracker:
 
 def load_env():
     """Load environment variables from .env file."""
-    env_path = Path.home() / ".env"
+    # Try current directory first (for GitHub Actions)
+    env_path = Path.cwd() / ".env"
     if env_path.exists():
         load_dotenv(env_path)
+    else:
+        # Fall back to home directory (for local use)
+        env_path = Path.home() / ".env"
+        if env_path.exists():
+            load_dotenv(env_path)
 
 
 def load_config(config_file=None):
