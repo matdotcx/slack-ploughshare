@@ -75,8 +75,8 @@ jobs:
       - name: Pull latest state from repository
         run: |
           git pull origin main || echo "[INFO] No changes to pull"
-          ls -lh channel_warnings.json 2>/dev/null && echo "[INFO] Warning tracker found" || echo "[INFO] No warning tracker yet"
-          ls -lh channel_analysis.* 2>/dev/null && echo "[INFO] Analysis data found" || echo "[INFO] No analysis data yet"
+          ls -lh state/channel_warnings.json 2>/dev/null && echo "[INFO] Warning tracker found" || echo "[INFO] No warning tracker yet"
+          ls -lh state/channel_analysis.* 2>/dev/null && echo "[INFO] Analysis data found" || echo "[INFO] No analysis data yet"
 
       - name: Configure environment
         run: |
@@ -154,7 +154,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           # Add state files
-          git add channel_warnings.json channel_analysis.* 2>/dev/null || true
+          git add state/ 2>/dev/null || true
 
           # Check if there are changes to commit
           if git diff --staged --quiet; then
@@ -185,7 +185,7 @@ jobs:
           import json
           from datetime import datetime
 
-          with open('channel_warnings.json') as f:
+          with open('state/channel_warnings.json') as f:
               data = json.load(f)
               channels = data.get('channels', {})
               total = len(channels)

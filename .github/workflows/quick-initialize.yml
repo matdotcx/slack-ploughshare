@@ -37,10 +37,10 @@ jobs:
 
       - name: Run initial channel analysis
         run: |
-          echo "[INFO] Running initial channel analysis to create baseline data..."
-          python slack_channel_analytics.py --limit 10
+          echo "[INFO] Running full channel analysis (all channels)..."
+          python slack_channel_analytics.py
           echo "[INFO] Analysis complete - checking files..."
-          ls -lh channel_*.json channel_*.csv 2>/dev/null || echo "[WARNING] Analysis files not found"
+          ls -lh state/channel_*.json state/channel_*.csv 2>/dev/null || echo "[WARNING] Analysis files not found"
           echo "[INFO] Artifacts will be uploaded"
 
       - name: Upload warning tracker artifact
@@ -48,7 +48,7 @@ jobs:
         if: always()
         with:
           name: warning-tracker
-          path: channel_warnings.json
+          path: state/channel_warnings.json
           retention-days: 90
           overwrite: true
 
@@ -58,8 +58,8 @@ jobs:
         with:
           name: channel-analysis
           path: |
-            channel_analysis.json
-            channel_analysis.csv
+            state/channel_analysis.json
+            state/channel_analysis.csv
           retention-days: 30
           overwrite: true
           if-no-files-found: warn
@@ -74,9 +74,9 @@ jobs:
           echo "✅ Artifacts uploaded for state persistence" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### What was created:" >> $GITHUB_STEP_SUMMARY
-          echo "- \`channel_warnings.json\` - Empty warning tracker" >> $GITHUB_STEP_SUMMARY
-          echo "- \`channel_analysis.json\` - Sample analysis data" >> $GITHUB_STEP_SUMMARY
-          echo "- \`channel_analysis.csv\` - Sample analysis data (CSV)" >> $GITHUB_STEP_SUMMARY
+          echo "- \`state/channel_warnings.json\` - Warning tracker" >> $GITHUB_STEP_SUMMARY
+          echo "- \`state/channel_analysis.json\` - Full channel analysis data" >> $GITHUB_STEP_SUMMARY
+          echo "- \`state/channel_analysis.csv\` - Full channel analysis data (CSV)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Next Steps:" >> $GITHUB_STEP_SUMMARY
           echo "1. Run **Test: Dry Run Warnings** to see what would be warned" >> $GITHUB_STEP_SUMMARY

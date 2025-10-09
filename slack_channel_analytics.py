@@ -21,8 +21,10 @@ from slack_sdk.errors import SlackApiError
 class WarningTracker:
     """Track warning messages sent to channels with JSON persistence."""
 
-    def __init__(self, tracker_file="channel_warnings.json"):
+    def __init__(self, tracker_file="state/channel_warnings.json"):
         self.tracker_file = Path(tracker_file)
+        # Ensure state directory exists
+        self.tracker_file.parent.mkdir(parents=True, exist_ok=True)
         self.data = self.load()
         # Ensure file exists for GitHub Actions artifacts
         if not self.tracker_file.exists():
@@ -189,9 +191,9 @@ def load_config(config_file=None):
             "warning_message": "This channel has been inactive and is scheduled for archiving. React with 👍 within 30 days to keep it active. Archived channels remain searchable, though no new messages can be posted.",
         },
         "output": {
-            "report_file": "channel_analysis.json",
+            "report_file": "state/channel_analysis.json",
             "export_csv": True,
-            "csv_file": "channel_analysis.csv",
+            "csv_file": "state/channel_analysis.csv",
             "summary_limit": 15,
             "show_member_count": True,
             "show_last_message_date": True,

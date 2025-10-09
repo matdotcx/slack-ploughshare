@@ -26,14 +26,11 @@ wheels/
 .installed.cfg
 *.egg
 
-# Local state files (GitHub Actions will commit these)
-# Comment out to allow state files to be committed by automation
-# channel_analysis.json
-# channel_analysis.csv
-# channel_warnings.json
-
 # Local config override
 slack_analytics_config.yaml
+
+# Note: state/ directory is tracked by git for persistence
+# GitHub Actions commits state files after each run
 
 # IDE
 .vscode/
