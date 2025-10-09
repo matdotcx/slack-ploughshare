@@ -73,11 +73,11 @@ cleanup:
 
 output:
   # Report settings
-  report_file: "channel_analysis.json"
+  report_file: "state/channel_analysis.json"
 
   # CSV export settings
   export_csv: true
-  csv_file: "channel_analysis.csv"
+  csv_file: "state/channel_analysis.csv"
 
   # How many top channels to show in summary (0 = show all)
   summary_limit: 15
