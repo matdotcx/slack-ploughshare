@@ -1,14 +1,81 @@
 channel_name,channel_id,category,is_private,is_archived,member_count,has_messages,days_since_last_message,last_message_date,created_date,days_old,pinned_count,warned_at,archive_scheduled_for,saved_by_reaction,warning_status,reactions_found,topic,purpose
-announcements,C04QVKV08,active,False,False,80063,True,0,2025-10-09T07:28:44.874829,2015-05-12T17:15:18,3803,0,,,False,,,MacAdmins.org admins will post announcements about this Slack team in this channel.,MacAdmins.org admins will post announcements about this Slack team in this channel.
-jamfnation,C04QVP86E,active,False,False,20609,True,0,2025-10-09T17:12:46.661199,2015-05-12T17:21:40,3802,0,,,False,,,Current version: Jamf Pro 11.21.1 <https://community.jamf.com/release-announcements-177/jamf-pro-11-21-1-now-available-56517>,"General discussion for Jamf products, with a focus on Jamf Pro. Browse the channel viewer for other <#C0CHFSAB1|>- related channels. :jamf:"
-munki,C04QVPFGU,active,False,False,5207,True,0,2025-10-09T13:49:06.107759,2015-05-12T17:22:01,3802,0,,,False,,,New to Munki? Read this first <https://github.com/munki/munki/wiki/FAQ> then this: <https://github.com/munki/munki/wiki/Troubleshooting>. Searching the wiki? <https://github.com/munki/munki/wiki#searching-the-wiki>,All things munki
-cascadia,C0533K6HC,active,False,False,494,True,0,2025-10-08T19:45:41.677309,2015-05-29T03:03:43,3786,0,,,False,,,"Rain &amp; coffee &amp; salmon &amp; weed &amp; Macs and sometimes Canada! Sponsored by The Big Dark.
+announcements,C04QVKV08,active,False,False,80063,True,0,2025-10-09T06:28:44.874829,2015-05-12T16:15:18,3803,0,,,False,,,MacAdmins.org admins will post announcements about this Slack team in this channel.,MacAdmins.org admins will post announcements about this Slack team in this channel.
+jamfnation,C04QVP86E,active,False,False,20609,True,0,2025-10-09T16:12:46.661199,2015-05-12T16:21:40,3802,0,,,False,,,Current version: Jamf Pro 11.21.1 <https://community.jamf.com/release-announcements-177/jamf-pro-11-21-1-now-available-56517>,"General discussion for Jamf products, with a focus on Jamf Pro. Browse the channel viewer for other <#C0CHFSAB1|>- related channels. :jamf:"
+munki,C04QVPFGU,active,False,False,5207,True,0,2025-10-09T12:49:06.107759,2015-05-12T16:22:01,3802,0,,,False,,,New to Munki? Read this first <https://github.com/munki/munki/wiki/FAQ> then this: <https://github.com/munki/munki/wiki/Troubleshooting>. Searching the wiki? <https://github.com/munki/munki/wiki#searching-the-wiki>,All things munki
+cascadia,C0533K6HC,active,False,False,494,True,0,2025-10-08T18:45:41.677309,2015-05-29T02:03:43,3786,0,,,False,,,"Rain &amp; coffee &amp; salmon &amp; weed &amp; Macs and sometimes Canada! Sponsored by The Big Dark.
 Zoom Happy Hour, Thursdays, 4 PM until the gods know when
 <https://zoom.us/j/99224623705?pwd=SFNWR0U2Q3k4L0h5Tnp4L1dZcVNVQT09>","For Cascadian MacAdmins. This can include WA, OR, ID, BC, maaaaybe far North CA and heck we'll even let you AK folks in"
-filewave,C053TS2M7,active,False,False,617,True,8,2025-09-30T22:39:44.499589,2015-05-29T07:33:52,3786,0,,,False,,,"Discuss all things FileWave.  Share development ideas, and see what the FileWave community is up to.  Latest version: 16.1.1","Discuss all things FileWave.  Share development ideas, and see what the FileWave community is up to.  Latest version:  16.1.1"
-workspaceone,C053TS6JT,active,False,False,2744,True,0,2025-10-09T16:44:08.727849,2015-05-29T07:34:08,3786,0,,,False,,,"Community knowledge sharing and product feedback!  <https://community.omnissa.com> | Samples:  <https://github.com/euc-oss/euc-samples> | New support portal: <https://customerconnect.omnissa.com/dashboard>
+filewave,C053TS2M7,active,False,False,617,True,8,2025-09-30T21:39:44.499589,2015-05-29T06:33:52,3786,0,,,False,,,"Discuss all things FileWave.  Share development ideas, and see what the FileWave community is up to.  Latest version: 16.1.1","Discuss all things FileWave.  Share development ideas, and see what the FileWave community is up to.  Latest version:  16.1.1"
+workspaceone,C053TS6JT,active,False,False,2744,True,0,2025-10-09T15:44:08.727849,2015-05-29T06:34:08,3786,0,,,False,,,"Community knowledge sharing and product feedback!  <https://community.omnissa.com> | Samples:  <https://github.com/euc-oss/euc-samples> | New support portal: <https://customerconnect.omnissa.com/dashboard>
  | TechZone: <https://techzone.omnissa.com>","Community knowledge sharing and product feedback!   If it’s a production outage, please contact Support and/or your TAM!"
-blog-feed,C055M2KJ0,active,False,False,1372,True,0,2025-10-09T17:09:36.238669,2015-06-03T19:27:36,3780,0,,,False,,,Use `/feed &lt;link&gt;` to add a blog to this channel. Join <#C4ENKD38A|> to discuss a post.,This channel is intended to act as an RSS feed for Mac Admin blogs.
-puppies,C04RJV6Q7,very_old,False,False,60,True,407,2024-08-27T18:05:05.440429,2015-05-12T18:54:18,3802,0,,,False,,,For pictures of dogs. Because dogs.,
-lanrev,C050QSWUE,very_old,False,False,182,True,407,2024-08-27T18:05:06.157179,2015-05-23T20:44:36,3791,0,,,False,,,Get help with LANrev from Ivanti <https://forums.ivanti.com/s/article/LANrev-Downloads> | Current version 7.4.5 | EOL 9/30/19,Get help with LANrev from HEAT Software
-full-disclosure,C055346U8,very_old,False,False,181,True,386,2024-09-18T14:55:34.034979,2015-06-02T21:16:02,3781,0,,,False,,,,"A public, vendor-neutral forum for detailed discussion of vulnerabilities and exploitation techniques, as well as tools, papers, news, and events of interest to the community. The relaxed atmosphere of this quirky list provides some comic relief and"
+blog-feed,C055M2KJ0,active,False,False,1372,True,0,2025-10-09T16:09:36.238669,2015-06-03T18:27:36,3780,0,,,False,,,Use `/feed &lt;link&gt;` to add a blog to this channel. Join <#C4ENKD38A|> to discuss a post.,This channel is intended to act as an RSS feed for Mac Admin blogs.
+critters,C055NRWBX,active,False,False,175,True,0,2025-10-09T15:13:18.315409,2015-06-02T18:06:22,3781,0,,,False,,,http://explore.org/live-cams/player/kitten-rescue-cam,KITTENS!!!
+deals,C055R0NHB,active,False,False,220,True,22,2025-09-17T00:48:25.212149,2015-06-02T20:18:39,3781,0,,,False,,,Find a good deal? Let's hear about it!,"If you find a good deal that other Mac Admins should know about, post it here!"
+london,C0560V3BQ,active,False,False,936,True,0,2025-10-09T15:49:31.050409,2015-06-04T12:57:18,3780,0,,,False,,,:gb: ,Home of the London Apple Admins community - all are welcome! You should read this ... <https://soundmacguy.wordpress.com/2018/06/29/good-moaning-london/>  <https://www.londonappleadmins.org.uk>
+autopkg,C056155B4,active,False,False,5121,True,0,2025-10-08T17:00:47.711629,2015-06-04T13:09:35,3780,0,,,False,,,AutoPkg/AutoPkgr discussion/support. • Trust warnings: <https://tinyurl.com/trust-tldr> • AutoPkgr issues:  <https://tinyurl.com/AutoPkgr-ts> • Recipe search: <https://autopkgweb.com>,AutoPkg/AutoPkgr discussion/support. • Trust warnings: <https://tinyurl.com/trust-tldr> • AutoPkgr issues:  <https://tinyurl.com/AutoPkgr-ts> • Recipe search: <https://autopkgweb.com>
+dc,C05630P3P,active,False,False,237,True,20,2025-09-19T15:41:48.847689,2015-06-03T12:41:35,3781,0,,,False,,,,"Next Meetup: Wednesday Sept 4th, 2024, 5pm Eastern!"
+sports,C0568DQQM,active,False,False,74,True,8,2025-09-30T17:11:34.861069,2015-06-03T18:03:55,3780,0,,,False,,,General Sportsball chat,Friendly banter about sports things.
+gaming,C056AMTNB,active,False,False,562,True,0,2025-10-09T16:10:52.845599,2015-06-03T20:19:51,3780,0,,,False,,,New sub channel <#C881JT3V2|>,GPU Chat
+anzmac,C056D28L1,active,False,False,1050,True,0,2025-10-09T07:02:47.926479,2015-06-03T22:52:37,3780,0,,,False,,,"Happy Hour Thursday 5pm AEST :point_right: <https://jamf.it/anzmac>
+It’s Australian and NZ for Fruit, except on Fridays when it’s mainly puns (and pet photos)","Happy Hour Thursday 5pm AEDST :point_right: <http://link.smithjw.me/happyhour> (passcode is anzmac)
+It’s Australian and NZ for Fruit, except on Fridays when it’s mainly puns (and pet photos)"
+python,C056UTQ3M,active,False,False,2415,True,1,2025-10-08T15:25:06.924129,2015-06-04T19:00:54,3779,0,,,False,,,"Python 2 was removed from macOS with the release of macOS 12.3. Act then (and now, I guess).",Learning python or want to? This is the place!
+watchmanmonitoring,C0608CXEC,active,False,False,514,True,9,2025-09-29T19:05:58.904439,2015-06-05T03:43:46,3779,0,,,False,,,Visit <https://support.watchmanmonitoring.com> for resolution to specific problems or questions.,<https://support.watchmanmonitoring.com>
+windows,C060CA8NS,active,False,False,2133,True,1,2025-10-08T04:11:03.972629,2015-06-05T07:08:51,3779,0,,,False,,,"Windows Admins: <https://discord.com/invite/winadmins>.  Windows 10 EOL: October 14, 2025. ","For discussion of Windows administration, deployment, support and management."
+macadminsfr,C060F15FT,active,False,False,471,True,1,2025-10-08T14:52:21.015979,2015-06-05T09:02:45,3779,0,,,False,,,Bienvenue aux francophones :flag-be: :flag-ca: :flag-ch: :flag-fr: -- invitez vos copains sur <http://MacAdmins.org> !,For french-speaking MacAdmins !
+switzerland,C060F1MRC,active,False,False,183,True,24,2025-09-15T14:12:15.859049,2015-06-05T09:02:22,3779,0,,,False,,,":flag-ch: Switzerland-based MacAdmins – next meeting TBD.
+
+Any language welcome, but Swiss German will incur the wrath of <@U06CV49AB>.","For MacAdmins in Switzerland ! 
+
+Please find all meetup dates for 2018 on our calendar: <https://www.calendartree.com/_LEY5/-macsysadmin-bier-2018>"
+music,C060JBUQZ,active,False,False,193,True,0,2025-10-09T15:03:05.678929,2015-06-05T11:16:58,3779,0,,,False,,,,To share music you are listening to to get you through the day.
+msp-stack,C060NDL8N,active,False,False,851,True,2,2025-10-06T18:35:38.896259,2015-06-05T13:44:50,3779,0,,,False,,,"For discussion of Managed Service Provider apps, tools, techniques, and experiences.","Talk about the collection of apps or services that you're using to create a Managed Services offering. Could include telephony, helpdesk, documentation, scheduling, password management, billing, or accounting."
+jobs-chat,C060PU4T1,active,False,False,4381,True,0,2025-10-09T14:47:51.162699,2015-06-05T14:31:57,3779,0,,,False,,,"Discuss <#C0HFC4VHD|> postings here, post openings or that you’re looking for work (with your online resume/linkedin) over there,
+
+Come talk about career issues as well, :thread: as much as possible plz",Talk jobs and jobs advice. Post job openings in <#C0HFC4VHD|>
+filevault,C060SPREF,active,False,False,3912,True,0,2025-10-09T12:29:26.696649,2015-06-05T15:54:54,3779,0,,,False,,,"FileVault full-disk encryption uses XTS-AES-128 encryption with a 256-bit key to help prevent unauthorized access to the information on your startup disk. FileVault 1 10.3 Oct 24, 2003 - FileVault 2 10.7 July 20, 2011 - SecureToken 10.13 Sep 25, 2017",Resources and solutions for deploying and managing FileVault.
+meetups,C0612FHMX,active,False,False,447,True,3,2025-10-06T14:41:35.386879,2015-06-05T20:55:27,3778,0,,,False,,,Submit your meetup to the <http://MacAdmins.org|MacAdmins.org> Podcast via pull request: <https://github.com/tbridge/macadminscomcal/>,Keep up to date with Mac Admin Meetups. See also  http://www.macmeetups.com/
+apple-gsx,C0619DK0X,active,False,False,994,True,8,2025-09-30T19:30:01.407929,2015-06-06T01:56:16,3778,0,,,False,,,"""Specializing in artisanal, bespoke IT support for the discerning user."" <@U06RKF2CS>",This channel is for Apple Care GSX website discussion and Apple hardware troubleshooting.
+macos,C0619KJQY,active,False,False,13852,True,0,2025-10-09T14:59:47.537569,2015-06-06T02:02:07,3778,0,,,False,,,"Latest macOS versions are found in the <#C076ZSMDDLP|>, <#CH8LPK7KP|>, <#C03K5RQ6H7S|>, and <#CK38R7KPS|> channels. Interested in beta releases? See <#C9C47G4LU|>",General discussion about macOS.
+sal,C061B9XGS,active,False,False,334,True,1,2025-10-07T18:29:23.316849,2015-06-06T04:24:47,3778,0,,,False,,,"<https://github.com/salopensource/sal> Scripts Stable: 4.9.0, Server: 4.4.1 <https://github.com/salopensource/sal/pkgs/container/sal>","All Sal, all the time. https://github.com/salopensource/sal"
+philly,C061J8BMJ,active,False,False,287,True,0,2025-10-08T22:14:43.650099,2015-06-06T16:01:56,3778,0,,,False,,,September 18th: In-Person at Rutgers! <https://www.eventbrite.com/e/philly-mac-admins-meetup-at-rutgers-camden-tickets-1674168385709>,"For Philly and Delaware Valley admins. <http://phillymacadmins.com>
+
+Mastodon: <https://mastodon.social/@phillymacadmins>"
+macsysadminconf,C061LT1MY,active,False,False,977,True,1,2025-10-08T14:23:14.250259,2015-06-06T19:04:53,3777,0,,,False,,,"Talk about the MacSysAdmin Conference: September 30 - October 3, 2025 - <https://www.macsysadmin.se>
+<https://www.youtube.com/@MacSysAdminConference>","The conference may be a single week each year, but the discussions can continue here year-round!"
+macwomen,C063D6PT5,active,False,False,188,True,2,2025-10-07T16:04:02.944319,2015-06-08T19:54:17,3775,0,,,False,,,"we've created a new room with a little more privacy. Ping <@U056TRFC7>,   <@U04U0P99Q>, <@U055KT2ML>, or <@U1LVD6605> and we'll get you in right away.",For anyone who identifies as female and works with macs
+adobe,C0653D6F9,active,False,False,4351,True,0,2025-10-09T06:49:33.528529,2015-06-09T21:08:13,3774,0,,,False,,,Please send constructive feedback to <mailto:saumehta@adobe.com|saumehta@adobe.com>.,Need help installing Adobe products?   Yes you do!  Stop in for advice or lend a hand with your expertise!
+networknerdery,C0658BP5K,active,False,False,1772,True,0,2025-10-09T15:26:27.635899,2015-06-09T23:14:44,3774,0,,,False,,,https://reddit.com/r/cableporn,For MacAdmins who are also Network Admins
+germany,C065RKW4E,active,False,False,339,True,20,2025-09-19T12:58:28.573729,2015-06-10T09:51:59,3774,0,,,False,,,,for Mac Admins in Germany
+psumac,C066MCBT2,active,False,False,1452,True,20,2025-09-18T16:34:53.715169,2015-06-10T20:11:03,3773,0,,,False,,,"Save the Date! July 7-10 2026
+:gforms: <https://bit.ly/psumac-2025-feedback|2025 Conference Feedback>
+:gdocs: <https://bit.ly/psumac2025notes|2025 Notes Folder>
+:yt: <https://youtube.com/psumacconf|YouTube Channel>","The MacAdmins Conference at PSU
+:psumac: <https://macadmins.psu.edu|macadmins.psu.edu>
+:yt: <https://youtube.com/psumacconf|YouTube Channel>
+:sched: <https://psumac2025.sched.com|2025 Schedule>
+:gdocs: <https://bit.ly/psumac2025notes|2025 Notes>
+"
+munkireport,C066NK3K5,active,False,False,1387,True,7,2025-10-02T03:32:18.145569,2015-06-10T20:33:34,3773,0,,,False,,,Latest release v5.8.0: <https://github.com/munkireport/munkireport-php/releases/tag/v5.8.0> :bee:,All things munkireport
+canada,C067959CK,active,False,False,341,True,2,2025-10-07T03:19:07.744269,2015-06-11T08:04:57,3773,0,,,False,,,:poutine::salute_canada:,All the Canadians!
+esxi,C055RSC70,dormant,False,False,522,True,170,2025-04-21T18:23:27.551929,2015-06-03T23:42:40,3780,0,,,False,,,"VMware ESXi is an enterprise-class hypervisor developed by VMware for deploying and serving virtual computers.  This channel is for discussing server builds, vm’s and troubleshooting. Great starting point: <https://www.virtuallyghetto.com/apple>",
+wwdc,C0603USTF,dormant,False,False,978,True,120,2025-06-10T21:42:14.241509,2015-06-05T00:27:09,3779,0,,,False,,,"WorldWide Developers Conference (WWDC25) June 9-13
+<https://developer.apple.com/wwdc25/>",
+beer-n-libations,C060MP509,dormant,False,False,261,True,86,2025-07-14T17:45:49.455769,2015-06-05T13:25:08,3779,0,,,False,,,,"Discussion for all things beer. Breweries, favorite beers, recipes, etc."
+texas,C06231UUE,dormant,False,False,173,True,148,2025-05-14T14:40:07.498359,2015-06-07T20:50:54,3776,0,,,False,,,"Texas Apple Admins Network | Virtual Meetup, March 30 @ noon: <https://houstonappleadmins.org/Mar2021-TexasAppleAdminsVirtual/>",Texas-based macadmin/appleadmin/iOSadmin/etc. folks
+docker,C066B1JAX,dormant,False,False,996,True,44,2025-08-25T22:37:13.293209,2015-06-10T16:54:11,3773,0,,,False,,,Great collection of all Docker resources: https://github.com/veggiemonk/awesome-docker,"All Docker, all the time."
+puppies,C04RJV6Q7,very_old,False,False,60,True,407,2024-08-27T17:05:05.440429,2015-05-12T17:54:18,3802,0,,,False,,,For pictures of dogs. Because dogs.,
+lanrev,C050QSWUE,very_old,False,False,182,True,407,2024-08-27T17:05:06.157179,2015-05-23T19:44:36,3791,0,,,False,,,Get help with LANrev from Ivanti <https://forums.ivanti.com/s/article/LANrev-Downloads> | Current version 7.4.5 | EOL 9/30/19,Get help with LANrev from HEAT Software
+full-disclosure,C055346U8,very_old,False,False,181,True,386,2024-09-18T13:55:34.034979,2015-06-02T20:16:02,3781,0,,,False,,,,"A public, vendor-neutral forum for detailed discussion of vulnerabilities and exploitation techniques, as well as tools, papers, news, and events of interest to the community. The relaxed atmosphere of this quirky list provides some comic relief and"
+mobileiron,C055QPJD1,very_old,False,False,253,True,387,2024-09-17T02:04:30.462979,2015-06-02T20:05:57,3781,0,,,False,,,Managing macOS and iOS with MobileIron Core or Cloud. Discussions can happen with community. You can use <@U7DL440S1> for Qs to MobileIron specifically,For MobileIron MDM Users.
+deploystudio,C056NV03Z,very_old,False,False,1058,True,386,2024-09-18T09:59:42.900439,2015-06-04T13:09:12,3780,0,,,False,,,"DeployStudio 1.7.8 - supports 10.7 through 10.13.3 (capturing APFS volumes is not supported)
+
+v1.7.11 (beta) (64-bit only &amp; Si)
+
+When in doubt, create a new NBI from newest OS version.
+
+Related Projects:
+<https://github.com/MagerValp/AutoDSNBI>",DeployStudio discussion and support
+macadminsdk,C060W8T08,very_old,False,False,64,True,498,2024-05-28T17:04:27.130479,2015-06-05T17:35:35,3778,0,,,False,,,,Channel for Macadmins in Denmark.
+netboot,C0619JKT5,very_old,False,False,409,True,394,2024-09-09T19:22:17.417279,2015-06-06T02:06:51,3778,0,,,False,,,,This channel is for Netboot discussion.
+osx-server,C067LGP40,very_old,False,False,1405,True,382,2024-09-22T12:45:08.448099,2015-06-11T13:31:05,3773,0,,,False,,,:rip: <https://support.apple.com/en-us/HT208312> :rip:,Discussion about OS X's Server.app and the services included.
