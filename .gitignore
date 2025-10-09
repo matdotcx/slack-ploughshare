@@ -26,9 +26,13 @@ wheels/
 .installed.cfg
 *.egg
 
-# Analysis output files
-channel_analysis.json
-channel_analysis.csv
+# Local state files (GitHub Actions will commit these)
+# Comment out to allow state files to be committed by automation
+# channel_analysis.json
+# channel_analysis.csv
+# channel_warnings.json
+
+# Local config override
 slack_analytics_config.yaml
 
 # IDE

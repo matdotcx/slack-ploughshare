@@ -59,6 +59,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -70,23 +72,11 @@ jobs:
         run: |
           pip install slack-sdk python-dotenv pyyaml
 
-      - name: Restore warning tracker from artifacts
-        uses: dawidd6/action-download-artifact@v6
-        continue-on-error: true
-        with:
-          name: warning-tracker
-          path: .
-          workflow_conclusion: success
-          if_no_artifact_found: warn
-
-      - name: Restore channel analysis from artifacts
-        uses: dawidd6/action-download-artifact@v6
-        continue-on-error: true
-        with:
-          name: channel-analysis
-          path: .
-          workflow_conclusion: success
-          if_no_artifact_found: warn
+      - name: Pull latest state from repository
+        run: |
+          git pull origin main || echo "[INFO] No changes to pull"
+          ls -lh channel_warnings.json 2>/dev/null && echo "[INFO] Warning tracker found" || echo "[INFO] No warning tracker yet"
+          ls -lh channel_analysis.* 2>/dev/null && echo "[INFO] Analysis data found" || echo "[INFO] No analysis data yet"
 
       - name: Configure environment
         run: |
@@ -157,36 +147,29 @@ jobs:
         run: |
           python slack_channel_analytics.py --${{ steps.determine-command.outputs.command }} ${{ steps.determine-command.outputs.dry_run }} ${{ steps.determine-command.outputs.additional }}
 
-      - name: Upload warning tracker artifact
-        uses: actions/upload-artifact@v4
+      - name: Commit state back to repository
         if: always()
-        with:
-          name: warning-tracker
-          path: channel_warnings.json
-          retention-days: 90
-          overwrite: true
-          if-no-files-found: ignore
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Upload channel analysis artifact
-        uses: actions/upload-artifact@v4
-        if: success()
-        with:
-          name: channel-analysis
-          path: |
-            channel_analysis.json
-            channel_analysis.csv
-          retention-days: 30
-          overwrite: true
-          if-no-files-found: ignore
+          # Add state files
+          git add channel_warnings.json channel_analysis.* 2>/dev/null || true
 
-      - name: Upload logs
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: logs-${{ github.run_number }}
-          path: logs/
-          retention-days: 14
-          if-no-files-found: ignore
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "[INFO] No state changes to commit"
+          else
+            git commit -m "Update state from workflow run ${{ github.run_number }}
+
+Command: ${{ steps.determine-command.outputs.command }}
+Mode: ${{ steps.determine-command.outputs.mode }}
+Triggered: ${{ github.event_name }}
+Run: ${{ github.run_id }}"
+
+            git push origin main
+            echo "[INFO] State committed and pushed to repository"
+          fi
 
       - name: Generate summary
         if: always()
