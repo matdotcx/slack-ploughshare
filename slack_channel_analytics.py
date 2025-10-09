@@ -18,6 +18,133 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
 
+class WarningTracker:
+    """Track warning messages sent to channels with JSON persistence."""
+
+    def __init__(self, tracker_file='channel_warnings.json'):
+        self.tracker_file = Path(tracker_file)
+        self.data = self.load()
+
+    def load(self):
+        """Load warning data from JSON file."""
+        if self.tracker_file.exists():
+            with open(self.tracker_file, 'r') as f:
+                return json.load(f)
+        else:
+            return {
+                'channels': {},
+                'metadata': {
+                    'last_updated': None,
+                    'total_warnings_sent': 0
+                }
+            }
+
+    def save(self):
+        """Save warning data to JSON file."""
+        self.data['metadata']['last_updated'] = datetime.now().isoformat()
+        with open(self.tracker_file, 'w') as f:
+            json.dump(self.data, f, indent=2)
+
+    def is_warned(self, channel_id):
+        """Check if a channel has already been warned."""
+        return channel_id in self.data['channels']
+
+    def get_warning(self, channel_id):
+        """Get warning data for a channel."""
+        return self.data['channels'].get(channel_id)
+
+    def record_warning(self, channel_id, channel_name, category, message_ts=None, warning_days=30):
+        """Record a warning sent to a channel."""
+        warned_at = datetime.now()
+        archive_date = warned_at + timedelta(days=warning_days)
+
+        self.data['channels'][channel_id] = {
+            'channel_name': channel_name,
+            'category': category,
+            'warned_at': warned_at.isoformat(),
+            'archive_scheduled_for': archive_date.isoformat(),
+            'warning_message_ts': message_ts,
+            'saved_by_reaction': False,
+            'last_reaction_check': None,
+            'reactions_found': [],
+            'archived_at': None,
+            'status': 'warned'  # warned, saved, archived
+        }
+
+        self.data['metadata']['total_warnings_sent'] += 1
+        self.save()
+
+    def mark_saved_by_reaction(self, channel_id, reactions):
+        """Mark a channel as saved by user reaction."""
+        if channel_id in self.data['channels']:
+            self.data['channels'][channel_id]['saved_by_reaction'] = True
+            self.data['channels'][channel_id]['status'] = 'saved'
+            self.data['channels'][channel_id]['reactions_found'] = reactions
+            self.data['channels'][channel_id]['last_reaction_check'] = datetime.now().isoformat()
+            self.save()
+
+    def update_reaction_check(self, channel_id, reactions=None):
+        """Update last reaction check time."""
+        if channel_id in self.data['channels']:
+            self.data['channels'][channel_id]['last_reaction_check'] = datetime.now().isoformat()
+            if reactions:
+                self.data['channels'][channel_id]['reactions_found'] = reactions
+            self.save()
+
+    def mark_archived(self, channel_id):
+        """Mark a channel as archived."""
+        if channel_id in self.data['channels']:
+            self.data['channels'][channel_id]['archived_at'] = datetime.now().isoformat()
+            self.data['channels'][channel_id]['status'] = 'archived'
+            self.save()
+
+    def get_channels_ready_for_archive(self):
+        """
+        Get channels that are ready for archival:
+        - Warned 30+ days ago
+        - NOT saved by reactions
+        - NOT already archived
+        """
+        ready = []
+        now = datetime.now()
+
+        for channel_id, data in self.data['channels'].items():
+            # Check if already archived
+            if data.get('archived_at'):
+                continue
+
+            # Check if saved by reaction
+            if data.get('saved_by_reaction', False):
+                continue
+
+            # Check if past archive date
+            archive_date = datetime.fromisoformat(data['archive_scheduled_for'])
+            if now >= archive_date:
+                ready.append((channel_id, data))
+
+        return ready
+
+    def get_warned_channels(self):
+        """Get all channels currently in warned status."""
+        return {
+            cid: data for cid, data in self.data['channels'].items()
+            if data.get('status') == 'warned' and not data.get('archived_at')
+        }
+
+    def get_saved_channels(self):
+        """Get all channels saved by reactions."""
+        return {
+            cid: data for cid, data in self.data['channels'].items()
+            if data.get('saved_by_reaction', False)
+        }
+
+    def remove_channel(self, channel_id):
+        """Remove a channel from tracking (for --force-warnings)."""
+        if channel_id in self.data['channels']:
+            del self.data['channels'][channel_id]
+            self.save()
+
+
 def load_env():
     """Load environment variables from .env file."""
     env_path = Path.home() / ".env"
@@ -90,6 +217,7 @@ class ChannelAnalyzer:
         self.config = config or {}
         self.show_progress = False  # Flag to control progress display
         self.rate_limit_count = 0  # Track rate limits
+        self.warning_tracker = WarningTracker()  # Initialize warning tracker
 
     def fetch_all_channels(self, limit=None):
         """Fetch all channels (both public and private)."""
@@ -362,7 +490,7 @@ class ChannelAnalyzer:
         return categories
 
     def export_to_csv(self, categories):
-        """Export channel analysis to CSV."""
+        """Export channel analysis to CSV with warning data."""
         output_config = self.config.get('output', {})
         csv_file = output_config.get('csv_file', 'channel_analysis.csv')
 
@@ -372,12 +500,28 @@ class ChannelAnalyzer:
             for channel in channels:
                 channel_data = channel.copy()
                 channel_data['category'] = category_name
+
+                # Add warning data if exists
+                warning_data = self.warning_tracker.get_warning(channel['channel_id'])
+                if warning_data:
+                    channel_data['warned_at'] = warning_data.get('warned_at', '')
+                    channel_data['archive_scheduled_for'] = warning_data.get('archive_scheduled_for', '')
+                    channel_data['saved_by_reaction'] = warning_data.get('saved_by_reaction', False)
+                    channel_data['warning_status'] = warning_data.get('status', '')
+                    channel_data['reactions_found'] = ', '.join(warning_data.get('reactions_found', []))
+                else:
+                    channel_data['warned_at'] = ''
+                    channel_data['archive_scheduled_for'] = ''
+                    channel_data['saved_by_reaction'] = False
+                    channel_data['warning_status'] = ''
+                    channel_data['reactions_found'] = ''
+
                 all_channels.append(channel_data)
 
         if not all_channels:
             return
 
-        # Define CSV columns
+        # Define CSV columns (including warning columns)
         fieldnames = [
             'channel_name',
             'channel_id',
@@ -391,6 +535,11 @@ class ChannelAnalyzer:
             'created_date',
             'days_old',
             'pinned_count',
+            'warned_at',
+            'archive_scheduled_for',
+            'saved_by_reaction',
+            'warning_status',
+            'reactions_found',
             'topic',
             'purpose',
         ]
@@ -520,7 +669,7 @@ class ChannelAnalyzer:
             print(f"  [ERROR] Failed to join {channel_id}: {e.response['error']}")
             return False
 
-    def send_warning_message(self, channel_id, channel_name=None, dry_run=True):
+    def send_warning_message(self, channel_id, channel_name=None, category=None, dry_run=True, force=False):
         """Send a warning message to a channel before archiving."""
         cleanup_config = self.config.get('cleanup', {})
         send_warning = cleanup_config.get('send_warning', True)
@@ -528,11 +677,22 @@ class ChannelAnalyzer:
         if not send_warning:
             return True
 
+        # Check if already warned (unless force flag is set)
+        if not force and self.warning_tracker.is_warned(channel_id):
+            return True  # Skip, already warned
+
         warning_days = cleanup_config.get('warning_days_before_archive', 30)
-        message = cleanup_config.get('warning_message', 'This channel is scheduled for archival.')
+
+        # Get category-specific message if available
+        if category:
+            message_key = f'warning_message_{category}'
+            message = cleanup_config.get(message_key, '')
+            if not message:  # Fall back to default if empty
+                message = cleanup_config.get('warning_message', 'This channel is scheduled for archival.')
+        else:
+            message = cleanup_config.get('warning_message', 'This channel is scheduled for archival.')
 
         # Replace placeholder
-        from datetime import datetime, timedelta
         archive_date = (datetime.now() + timedelta(days=warning_days)).strftime('%Y-%m-%d')
         message = message.replace('{archive_date}', archive_date)
 
@@ -544,7 +704,18 @@ class ChannelAnalyzer:
                 print(f"    Message: {message[:80]}...")
                 return True
             else:
-                self.client.chat_postMessage(channel=channel_id, text=message)
+                response = self.client.chat_postMessage(channel=channel_id, text=message)
+                message_ts = response.get('ts')
+
+                # Record warning in tracker
+                self.warning_tracker.record_warning(
+                    channel_id=channel_id,
+                    channel_name=channel_name or channel_id,
+                    category=category or 'unknown',
+                    message_ts=message_ts,
+                    warning_days=warning_days
+                )
+
                 print(f"  [SUCCESS] Sent warning message to {channel_id}{name_str}")
                 return True
         except SlackApiError as e:
@@ -553,6 +724,260 @@ class ChannelAnalyzer:
             else:
                 print(f"  [ERROR] Failed to send warning to {channel_id}{name_str}: {e.response['error']}")
             return False
+
+    def check_channel_reactions(self, channel_id, message_ts, channel_name=None):
+        """Check if a warning message has reactions that save the channel."""
+        cleanup_config = self.config.get('cleanup', {})
+        save_reactions = cleanup_config.get('save_reactions', ['thumbsup', '+1', 'white_check_mark'])
+
+        name_str = f" - #{channel_name}" if channel_name else ""
+
+        try:
+            # Get message with reactions
+            response = self.client.reactions_get(
+                channel=channel_id,
+                timestamp=message_ts,
+                full=True
+            )
+
+            message = response.get('message', {})
+            reactions = message.get('reactions', [])
+
+            # Check if any of the configured reactions are present
+            found_reactions = []
+            for reaction in reactions:
+                reaction_name = reaction.get('name', '')
+                if reaction_name in save_reactions:
+                    found_reactions.append(reaction_name)
+
+            if found_reactions:
+                print(f"  [SAVED] Channel {channel_id}{name_str} has reactions: {', '.join(found_reactions)}")
+                self.warning_tracker.mark_saved_by_reaction(channel_id, found_reactions)
+                return True
+            else:
+                # No save reactions, just update check time
+                self.warning_tracker.update_reaction_check(channel_id)
+                return False
+
+        except SlackApiError as e:
+            if e.response['error'] in ['message_not_found', 'channel_not_found']:
+                print(f"  [WARNING] Message not found for {channel_id}{name_str}")
+            else:
+                print(f"  [ERROR] Failed to check reactions for {channel_id}{name_str}: {e.response['error']}")
+            return False
+
+    def check_all_warned_channels(self):
+        """Check reactions on all warned channels."""
+        warned = self.warning_tracker.get_warned_channels()
+
+        if not warned:
+            print("[INFO] No warned channels to check")
+            return
+
+        print(f"[INFO] Checking reactions on {len(warned)} warned channels...")
+
+        saved_count = 0
+        checked_count = 0
+
+        for channel_id, data in warned.items():
+            message_ts = data.get('warning_message_ts')
+            if not message_ts:
+                print(f"  [SKIP] No message timestamp for {data['channel_name']}")
+                continue
+
+            if self.check_channel_reactions(channel_id, message_ts, data['channel_name']):
+                saved_count += 1
+            checked_count += 1
+
+            time.sleep(0.2)  # Rate limiting
+
+        print(f"\n[SUMMARY] Checked: {checked_count}, Saved by reactions: {saved_count}")
+
+    def auto_warn_new_channels(self, dry_run=True):
+        """
+        Automatically analyze workspace and warn new inactive channels.
+        Only warns channels not already in warning tracker.
+        """
+        print("[INFO] Starting auto-warn process...")
+        print("[INFO] Step 1: Fetching all channels...")
+        self.fetch_all_channels()
+
+        print("[INFO] Step 2: Analyzing channels...")
+        self.analyze_all_channels()
+
+        print("[INFO] Step 3: Categorizing inactive channels...")
+        categories = self.categorize_channels()
+
+        # Get channels eligible for warning
+        to_warn = categories['very_old'] + categories['dormant'] + categories['never_used']
+
+        if not to_warn:
+            print("[INFO] No inactive channels found")
+            return
+
+        print(f"[INFO] Found {len(to_warn)} inactive channels")
+        print("[INFO] Step 4: Sending warnings to new channels...")
+
+        warned_count = 0
+        skipped_count = 0
+
+        for channel in sorted(to_warn, key=lambda x: x['channel_name']):
+            # Check if already warned
+            if self.warning_tracker.is_warned(channel['channel_id']) and not dry_run:
+                skipped_count += 1
+                continue
+
+            # Determine category
+            category = None
+            if channel in categories['very_old']:
+                category = 'very_old'
+            elif channel in categories['dormant']:
+                category = 'dormant'
+            elif channel in categories['never_used']:
+                category = 'never_used'
+
+            result = self.send_warning_message(
+                channel['channel_id'],
+                channel['channel_name'],
+                category=category,
+                dry_run=dry_run,
+                force=False
+            )
+            if result and not dry_run:
+                warned_count += 1
+
+            time.sleep(0.2)  # Rate limiting
+
+        print(f"\n[SUMMARY] Auto-warn complete: Warned: {warned_count}, Skipped (already warned): {skipped_count}")
+
+    def auto_archive_ready_channels(self, dry_run=True):
+        """
+        Automatically archive channels that are ready:
+        - Warned 30+ days ago
+        - NOT saved by reactions
+        - NOT already archived
+        """
+        print("[INFO] Starting auto-archive process...")
+        print("[INFO] Finding channels ready for archival...")
+
+        ready = self.warning_tracker.get_channels_ready_for_archive()
+
+        if not ready:
+            print("[INFO] No channels ready for archival")
+            return
+
+        print(f"[INFO] Found {len(ready)} channels ready for archival")
+
+        archived_count = 0
+
+        for channel_id, data in ready:
+            result = self.archive_channel(
+                channel_id,
+                data['channel_name'],
+                dry_run=dry_run
+            )
+            if result and not dry_run:
+                archived_count += 1
+
+            time.sleep(0.2)  # Rate limiting
+
+        print(f"\n[SUMMARY] Auto-archive complete: Archived: {archived_count}")
+
+    def print_warning_report(self):
+        """Print a detailed report of warning status."""
+        data = self.warning_tracker.data
+        channels = data.get('channels', {})
+        metadata = data.get('metadata', {})
+
+        if not channels:
+            print("\n[INFO] No channels in warning tracker")
+            return
+
+        # Categorize channels
+        warned = []
+        saved = []
+        archived = []
+        ready_for_archive = []
+
+        now = datetime.now()
+
+        for channel_id, channel_data in channels.items():
+            status = channel_data.get('status', 'warned')
+
+            if status == 'archived':
+                archived.append((channel_id, channel_data))
+            elif status == 'saved':
+                saved.append((channel_id, channel_data))
+            elif status == 'warned':
+                # Check if ready for archive
+                archive_date = datetime.fromisoformat(channel_data['archive_scheduled_for'])
+                if now >= archive_date:
+                    ready_for_archive.append((channel_id, channel_data))
+                else:
+                    warned.append((channel_id, channel_data))
+
+        # Print report
+        print("\n" + "=" * 70)
+        print("Warning Status Report")
+        print("=" * 70)
+        print(f"\nGenerated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print(f"Last updated: {metadata.get('last_updated', 'N/A')}")
+        print(f"Total warnings sent: {metadata.get('total_warnings_sent', 0)}")
+
+        print("\n" + "-" * 70)
+        print("Summary")
+        print("-" * 70)
+        print(f"Total tracked channels:    {len(channels)}")
+        print(f"Warned (in period):        {len(warned)}")
+        print(f"Ready for archive:         {len(ready_for_archive)}")
+        print(f"Saved by reactions:        {len(saved)}")
+        print(f"Already archived:          {len(archived)}")
+
+        if ready_for_archive:
+            print("\n" + "-" * 70)
+            print(f"Channels Ready for Archive ({len(ready_for_archive)})")
+            print("-" * 70)
+            for channel_id, data in sorted(ready_for_archive, key=lambda x: x[1]['warned_at']):
+                warned_date = datetime.fromisoformat(data['warned_at']).strftime('%Y-%m-%d')
+                archive_date = datetime.fromisoformat(data['archive_scheduled_for']).strftime('%Y-%m-%d')
+                days_overdue = (now - datetime.fromisoformat(data['archive_scheduled_for'])).days
+                print(f"  #{data['channel_name']:<35} Warned: {warned_date}  Archive: {archive_date}  ({days_overdue}d overdue)")
+
+        if warned:
+            print("\n" + "-" * 70)
+            print(f"Channels in Warning Period ({len(warned)})")
+            print("-" * 70)
+            for channel_id, data in sorted(warned, key=lambda x: x[1]['archive_scheduled_for']):
+                warned_date = datetime.fromisoformat(data['warned_at']).strftime('%Y-%m-%d')
+                archive_date = datetime.fromisoformat(data['archive_scheduled_for']).strftime('%Y-%m-%d')
+                days_remaining = (datetime.fromisoformat(data['archive_scheduled_for']) - now).days
+                print(f"  #{data['channel_name']:<35} Warned: {warned_date}  Archive: {archive_date}  ({days_remaining}d left)")
+
+        if saved:
+            print("\n" + "-" * 70)
+            print(f"Channels Saved by Reactions ({len(saved)})")
+            print("-" * 70)
+            for channel_id, data in sorted(saved, key=lambda x: x[1]['channel_name']):
+                warned_date = datetime.fromisoformat(data['warned_at']).strftime('%Y-%m-%d')
+                reactions = ', '.join(data.get('reactions_found', []))
+                check_date = data.get('last_reaction_check', 'N/A')
+                if check_date != 'N/A':
+                    check_date = datetime.fromisoformat(check_date).strftime('%Y-%m-%d')
+                print(f"  #{data['channel_name']:<35} Warned: {warned_date}  Reactions: {reactions}  Checked: {check_date}")
+
+        if archived:
+            print("\n" + "-" * 70)
+            print(f"Already Archived ({len(archived)})")
+            print("-" * 70)
+            for channel_id, data in sorted(archived, key=lambda x: x[1].get('archived_at', ''))[:15]:
+                archived_date = data.get('archived_at', 'N/A')
+                if archived_date != 'N/A':
+                    archived_date = datetime.fromisoformat(archived_date).strftime('%Y-%m-%d')
+                print(f"  #{data['channel_name']:<35} Archived: {archived_date}")
+            if len(archived) > 15:
+                print(f"  ... and {len(archived) - 15} more")
+
+        print("\n" + "=" * 70)
 
     def archive_channel(self, channel_id, channel_name=None, dry_run=True):
         """Archive a channel."""
@@ -563,6 +988,11 @@ class ChannelAnalyzer:
                 return True
             else:
                 self.client.conversations_archive(channel=channel_id)
+
+                # Mark as archived in warning tracker
+                if self.warning_tracker.is_warned(channel_id):
+                    self.warning_tracker.mark_archived(channel_id)
+
                 print(f"  [SUCCESS] Archived channel {channel_id}{name_str}")
                 return True
         except SlackApiError as e:
@@ -618,14 +1048,43 @@ def main():
                 time.sleep(0.1)  # Rate limiting
             print(f"✅ Dry run complete" if dry_run else f"✅ Bot joined {len(analyzer.channels)} channels")
             return
+        elif arg == '--check-reactions':
+            print("[INFO] Checking reactions on warned channels...")
+            analyzer = ChannelAnalyzer(token, config)
+            analyzer.check_all_warned_channels()
+            return
+        elif arg == '--auto-warn':
+            dry_run = '--for-real' not in sys.argv
+            if dry_run:
+                print("[INFO] DRY RUN: Auto-warn mode (use --for-real to actually send)")
+            else:
+                print("[INFO] AUTO-WARN MODE: Analyzing and warning new inactive channels")
+
+            analyzer = ChannelAnalyzer(token, config)
+            analyzer.auto_warn_new_channels(dry_run=dry_run)
+            return
+        elif arg == '--auto-archive':
+            dry_run = '--for-real' not in sys.argv
+            if dry_run:
+                print("[INFO] DRY RUN: Auto-archive mode (use --for-real to actually archive)")
+            else:
+                print("[INFO] AUTO-ARCHIVE MODE: Archiving channels past warning period")
+
+            analyzer = ChannelAnalyzer(token, config)
+            analyzer.auto_archive_ready_channels(dry_run=dry_run)
+            return
+        elif arg == '--warning-report':
+            analyzer = ChannelAnalyzer(token, config)
+            analyzer.print_warning_report()
+            return
         elif arg == '--send-warnings':
-            print("Loading analysis from previous run...")
+            print("[INFO] Loading analysis from previous run...")
             # Try to load from saved report
             output_config = config.get('output', {})
             report_file = output_config.get('report_file', 'channel_analysis.json')
 
             if not Path(report_file).exists():
-                print(f"No saved report found at {report_file}")
+                print(f"[ERROR] No saved report found at {report_file}")
                 print("Run analysis first: python slack_channel_analytics.py --limit 100")
                 return
 
@@ -637,36 +1096,86 @@ def main():
             # Send warnings to channels
             to_warn = report['categories']['very_old'] + report['categories']['never_used'] + report['categories']['dormant']
 
+            # Check for --force-warnings flag
+            force = '--force-warnings' in sys.argv
+
             dry_run = True
-            if len(sys.argv) > 2 and sys.argv[2] == '--for-real':
+            if '--for-real' in sys.argv:
                 dry_run = False
-                print("SENDING WARNINGS FOR REAL")
+                print("[INFO] SENDING WARNINGS FOR REAL")
             else:
-                print("DRY RUN: Would send warnings to channels")
+                print("[INFO] DRY RUN: Would send warnings to channels")
+
+            if force and not dry_run:
+                print("[WARNING] --force-warnings: Will re-warn channels even if already warned")
 
             if to_warn:
+                warned_count = 0
+                skipped_count = 0
                 for channel in sorted(to_warn, key=lambda x: x['channel_name']):
-                    analyzer.send_warning_message(channel['channel_id'], channel['channel_name'], dry_run=dry_run)
+                    # Determine category
+                    category = None
+                    if channel in report['categories']['very_old']:
+                        category = 'very_old'
+                    elif channel in report['categories']['dormant']:
+                        category = 'dormant'
+                    elif channel in report['categories']['never_used']:
+                        category = 'never_used'
+
+                    # Check if already warned
+                    if not force and analyzer.warning_tracker.is_warned(channel['channel_id']) and not dry_run:
+                        skipped_count += 1
+                        continue
+
+                    result = analyzer.send_warning_message(
+                        channel['channel_id'],
+                        channel['channel_name'],
+                        category=category,
+                        dry_run=dry_run,
+                        force=force
+                    )
+                    if result:
+                        warned_count += 1
                     time.sleep(0.2)  # Rate limiting
+
+                print(f"\n[SUMMARY] Warned: {warned_count}, Skipped (already warned): {skipped_count}")
             else:
-                print("No channels to warn.")
+                print("[INFO] No channels to warn.")
             return
         elif arg == '--help':
             print("Usage: python slack_channel_analytics.py [options]")
             print("\nOptions:")
-            print("  --limit N            Analyze only first N channels (useful for testing)")
-            print("  --channel ID         Analyze a single channel by ID (detailed analysis)")
-            print("  --join-channels      Join bot to all channels for accurate data collection")
-            print("  --send-warnings      Send warning messages to channels (from saved report)")
-            print("  --help               Show this help message")
+            print("  --limit N              Analyze only first N channels (useful for testing)")
+            print("  --channel ID           Analyze a single channel by ID (detailed analysis)")
+            print("  --join-channels        Join bot to all channels for accurate data collection")
+            print("  --send-warnings        Send warning messages to channels (from saved report)")
+            print("  --check-reactions      Check for reactions on warned channels")
+            print("  --auto-warn            Analyze workspace and warn NEW inactive channels (for cron)")
+            print("  --auto-archive         Archive channels past 30-day warning period (for cron)")
+            print("  --warning-report       Show detailed warning status report")
+            print("  --force-warnings       Re-warn channels even if already warned (use with --send-warnings)")
+            print("  --for-real             Actually execute (vs dry-run)")
+            print("  --help                 Show this help message")
             print("\nExamples:")
-            print("  python slack_channel_analytics.py                      # Analyze all channels")
-            print("  python slack_channel_analytics.py --limit 100          # Analyze first 100 channels")
-            print("  python slack_channel_analytics.py --channel C19MR7EM9  # Analyze one channel")
-            print("  python slack_channel_analytics.py --send-warnings      # Send warnings (dry run)")
+            print("  python slack_channel_analytics.py                           # Analyze all channels")
+            print("  python slack_channel_analytics.py --limit 100               # Analyze first 100 channels")
+            print("  python slack_channel_analytics.py --channel C19MR7EM9       # Analyze one channel")
+            print("  python slack_channel_analytics.py --send-warnings           # Send warnings (dry run)")
             print("  python slack_channel_analytics.py --send-warnings --for-real  # Actually send warnings")
+            print("  python slack_channel_analytics.py --check-reactions         # Check for user reactions")
+            print("  python slack_channel_analytics.py --warning-report          # View warning status")
+            print("  python slack_channel_analytics.py --auto-warn --for-real    # Automated weekly warning")
+            print("  python slack_channel_analytics.py --auto-archive --for-real # Automated weekly archive")
+            print("\nAutomation (for cron):")
+            print("  Use --auto-warn, --check-reactions, and --auto-archive in weekly cron jobs.")
+            print("  Run setup_cron.sh to install automated weekly jobs.")
             print("\nNote: For accurate member counts and message history, the bot must be")
             print("      in the channels. Use --join-channels to add the bot to all public channels.")
+            print("\nWarning Tracking:")
+            print("  Warnings are tracked in channel_warnings.json to prevent duplicate warnings.")
+            print("  Channels with thumbs-up reactions are marked as saved and won't be archived.")
+            print("  Use --warning-report to see current warning status.")
+            print("  Use --force-warnings to override and re-warn channels.")
             return
 
     analyzer = ChannelAnalyzer(token, config)

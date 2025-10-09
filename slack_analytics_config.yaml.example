@@ -9,6 +9,24 @@ analysis:
   # Include private channels in analysis (requires groups:read scope)
   include_private_channels: true
 
+automation:
+  # Enable/disable automatic operations
+  enable_auto_warn: true
+  enable_auto_check_reactions: true
+  enable_auto_archive: true
+
+  # Weekly schedule (staggered to allow completion)
+  # Format: "minute hour day-of-month month day-of-week"
+  # Default: Every Monday at different times
+  schedule_auto_warn: "0 1 * * 1"           # Monday 1 AM
+  schedule_check_reactions: "0 9 * * 1"     # Monday 9 AM
+  schedule_auto_archive: "0 17 * * 1"       # Monday 5 PM
+
+  # Alternative schedule examples:
+  # "0 1 * * 0"     = Sunday 1 AM
+  # "0 1 1 * *"     = First day of month at 1 AM
+  # "0 1 1,15 * *"  = 1st and 15th of month at 1 AM
+
 cleanup:
   # Which categories to include in cleanup recommendations
   # Set to true to include in cleanup candidates
@@ -19,12 +37,39 @@ cleanup:
   # Send warning message before archiving
   send_warning: true
   warning_days_before_archive: 30
+
+  # Default warning message (applies to all categories unless overridden)
   warning_message: |
-    This channel has been inactive for a long time and is scheduled for archival.
+    This channel has been inactive for a long time and is scheduled for archival in 30 days.
 
-    If this channel is still in use or contains important information, please react with a thumbs up (👍) or post a message within the next 30 days to keep it active.
+    If this channel is still in use or contains important information, please react with a thumbs up or post a message within 30 days to keep it active.
 
-    Inactive channels will be archived on {archive_date} to help keep our workspace organised.
+    Channels without activity will be automatically archived on {archive_date}.
+
+    This is an automated message from Slack Ploughshare workspace cleanup.
+
+  # Optional: Category-specific messages (leave empty to use default)
+  warning_message_very_old: |
+    WARNING: This channel has been inactive for over 180 days and is scheduled for archival.
+
+    If this channel is still needed, please react with a thumbs up or post a message within 30 days.
+    Otherwise it will be automatically archived on {archive_date}.
+
+  warning_message_dormant: |
+    NOTICE: This channel has been dormant for 30+ days and is scheduled for archival.
+
+    React with a thumbs up or post a message within 30 days to keep it active.
+    Archive date: {archive_date}
+
+  warning_message_never_used: |
+    This channel was created but has never been used.
+
+    If you still need it, react with a thumbs up or post a message by {archive_date}.
+    Otherwise it will be archived to keep the workspace organized.
+
+  # Reactions that save a channel from archival
+  # Users can react with any of these to mark the channel as "keep"
+  save_reactions: ["thumbsup", "+1", "white_check_mark"]
 
 output:
   # Report settings
