@@ -1,0 +1,162 @@
+name: Slack Ploughshare Weekly Automation
+
+on:
+  schedule:
+    # Weekly schedule (configurable)
+    # Default: Every Monday at 1 AM, 9 AM, and 5 PM UTC
+    # Adjust these cron expressions to match your timezone
+    - cron: '0 1 * * 1'   # Auto-warn: Monday 1 AM UTC
+    - cron: '0 9 * * 1'   # Check reactions: Monday 9 AM UTC
+    - cron: '0 17 * * 1'  # Auto-archive: Monday 5 PM UTC
+
+  # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Command to run'
+        required: true
+        type: choice
+        options:
+          - auto-warn
+          - check-reactions
+          - auto-archive
+          - warning-report
+      dry_run:
+        description: 'Dry run mode (true = dry run, false = execute for real)'
+        required: true
+        type: boolean
+        default: true
+
+jobs:
+  slack-automation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install slack-sdk python-dotenv pyyaml
+
+      - name: Restore warning tracker from artifacts
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: warning-tracker
+          path: .
+
+      - name: Restore channel analysis from artifacts
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: channel-analysis
+          path: .
+
+      - name: Configure environment
+        run: |
+          echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" > .env
+
+          # Copy config if it doesn't exist
+          if [ ! -f "slack_analytics_config.yaml" ]; then
+            cp slack_analytics_config.yaml.example slack_analytics_config.yaml
+          fi
+
+          mkdir -p logs
+
+      - name: Determine command to run
+        id: determine-command
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger
+            COMMAND="${{ inputs.command }}"
+            if [ "${{ inputs.dry_run }}" = "true" ]; then
+              DRY_RUN=""
+            else
+              DRY_RUN="--for-real"
+            fi
+          else
+            # Scheduled trigger - determine based on hour
+            HOUR=$(date -u +%H)
+            if [ "$HOUR" = "01" ]; then
+              COMMAND="auto-warn"
+              DRY_RUN="--for-real"
+            elif [ "$HOUR" = "09" ]; then
+              COMMAND="check-reactions"
+              DRY_RUN=""
+            elif [ "$HOUR" = "17" ]; then
+              COMMAND="auto-archive"
+              DRY_RUN="--for-real"
+            else
+              COMMAND="warning-report"
+              DRY_RUN=""
+            fi
+          fi
+
+          echo "command=$COMMAND" >> $GITHUB_OUTPUT
+          echo "dry_run=$DRY_RUN" >> $GITHUB_OUTPUT
+          echo "Running: python slack_channel_analytics.py --$COMMAND $DRY_RUN"
+
+      - name: Run Slack Ploughshare
+        run: |
+          python slack_channel_analytics.py --${{ steps.determine-command.outputs.command }} ${{ steps.determine-command.outputs.dry_run }}
+
+      - name: Upload warning tracker artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: warning-tracker
+          path: channel_warnings.json
+          retention-days: 90
+
+      - name: Upload channel analysis artifact
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: channel-analysis
+          path: |
+            channel_analysis.json
+            channel_analysis.csv
+          retention-days: 30
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logs-${{ github.run_number }}
+          path: logs/
+          retention-days: 14
+
+      - name: Generate summary
+        if: always()
+        run: |
+          echo "## Slack Ploughshare Execution Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Command:** \`${{ steps.determine-command.outputs.command }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Mode:** ${{ steps.determine-command.outputs.dry_run == '' && 'Execute' || 'Dry Run' }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Add warning report if available
+          if [ -f "channel_warnings.json" ]; then
+            echo "### Warning Tracker Status" >> $GITHUB_STEP_SUMMARY
+            python -c "
+          import json
+          with open('channel_warnings.json') as f:
+              data = json.load(f)
+              total = len(data.get('channels', {}))
+              warned = sum(1 for c in data.get('channels', {}).values() if c.get('status') == 'warned')
+              saved = sum(1 for c in data.get('channels', {}).values() if c.get('status') == 'saved')
+              archived = sum(1 for c in data.get('channels', {}).values() if c.get('status') == 'archived')
+              print(f'- **Total tracked:** {total}')
+              print(f'- **Currently warned:** {warned}')
+              print(f'- **Saved by reactions:** {saved}')
+              print(f'- **Archived:** {archived}')
+          " >> $GITHUB_STEP_SUMMARY || echo "No warning data available" >> $GITHUB_STEP_SUMMARY
+          fi

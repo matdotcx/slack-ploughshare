@@ -164,6 +164,129 @@ python slack_channel_analytics.py --auto-archive --for-real
 python slack_channel_analytics.py --help
 ```
 
+## Deployment Options
+
+You can run Slack Ploughshare in two ways:
+
+1. **GitHub Actions** (Recommended) - Free, managed, no infrastructure needed
+2. **VPS/Server** - Self-hosted with cron jobs
+
+---
+
+## GitHub Actions Deployment (Recommended)
+
+**[📖 Full GitHub Actions Setup Guide](.github/GITHUB_ACTIONS_SETUP.md)**
+
+### Why GitHub Actions?
+
+- **Free** - 2,000 minutes/month on free tier
+- **Managed** - No server to maintain
+- **Secrets Management** - Built-in secure token storage
+- **Artifacts** - Automatic state persistence between runs
+- **Manual Triggers** - Test anytime via UI
+- **Logs** - Full execution history in GitHub
+
+### Quick Setup
+
+1. **Fork or clone this repository to your GitHub account**
+
+2. **Add your Slack token as a secret:**
+   - Go to your repository on GitHub
+   - Settings > Secrets and variables > Actions
+   - Click "New repository secret"
+   - Name: `SLACK_BOT_TOKEN`
+   - Value: Your Slack bot token (starts with `xoxb-`)
+   - Click "Add secret"
+
+3. **Customize schedule (optional):**
+   - Edit `.github/workflows/slack-ploughshare-automation.yml`
+   - Modify the cron schedules:
+     ```yaml
+     on:
+       schedule:
+         - cron: '0 1 * * 1'   # Auto-warn: Monday 1 AM UTC
+         - cron: '0 9 * * 1'   # Check reactions: Monday 9 AM UTC
+         - cron: '0 17 * * 1'  # Auto-archive: Monday 5 PM UTC
+     ```
+   - Convert to your timezone (UTC times shown)
+   - Commit and push changes
+
+4. **Customize configuration (optional):**
+   - Copy `slack_analytics_config.yaml.example` to `slack_analytics_config.yaml`
+   - Customize thresholds, messages, etc.
+   - Commit and push
+
+5. **Enable GitHub Actions:**
+   - Go to Actions tab in your repository
+   - Click "I understand my workflows, go ahead and enable them"
+
+6. **Test with manual trigger:**
+   - Go to Actions tab
+   - Select "Slack Ploughshare Weekly Automation"
+   - Click "Run workflow"
+   - Choose command: `warning-report`
+   - Dry run: `true`
+   - Click "Run workflow"
+
+### How It Works
+
+**Automated Schedule:**
+- Runs weekly on configured days/times
+- Automatically persists state using GitHub Artifacts
+- `channel_warnings.json` stored between runs
+- Logs available for 14 days
+
+**State Persistence:**
+- Warning tracker stored as artifact (90 day retention)
+- Downloaded at start of each run
+- Uploaded after each run
+- Maintains 30-day warning periods across executions
+
+**Manual Testing:**
+- Use workflow_dispatch to test anytime
+- Choose any command (auto-warn, check-reactions, auto-archive, warning-report)
+- Dry run mode available for safe testing
+
+### Monitoring
+
+View execution logs:
+- Go to Actions tab
+- Click on workflow run
+- Expand steps to see detailed logs
+- Download artifacts for full analysis
+
+Check summary:
+- Each run shows summary with warning tracker stats
+- See how many channels are tracked, warned, saved, archived
+
+### Timezone Conversion
+
+GitHub Actions uses UTC. Convert your desired times:
+
+**Example: Want Monday 9 AM PST (UTC-8)?**
+- PST 9 AM = UTC 5 PM
+- Cron: `0 17 * * 1`
+
+**Example: Want Monday 1 PM CET (UTC+1)?**
+- CET 1 PM = UTC 12 PM
+- Cron: `0 12 * * 1`
+
+Use [crontab.guru](https://crontab.guru) for help with cron expressions.
+
+### Costs
+
+GitHub Actions free tier:
+- 2,000 minutes/month
+- Each run takes ~5-10 minutes (depends on workspace size)
+- Weekly schedule = ~12 runs/month = ~120 minutes/month
+- Well within free tier
+
+For large workspaces (1000+ channels):
+- Runs may take 15-30 minutes
+- Still ~360 minutes/month = within free tier
+
+---
+
 ## VPS Deployment
 
 ### Quick Setup
