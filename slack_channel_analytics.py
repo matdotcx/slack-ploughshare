@@ -915,14 +915,14 @@ class ChannelAnalyzer:
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": f"*Recommended Action: Review {new_candidates} New Warning Candidates*"
+                        "text": f"*Action Available: {new_candidates} New Warning Candidates*"
                     }
                 },
                 {
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "1. Review: <https://github.com/macadminsdotorg/slack-ploughshare/blob/main/state/channel_analysis.csv|View Analysis CSV>\n2. Test: Run *Manual: Test Warnings (Dry Run)* workflow\n3. Review: Check Slack for dry run summary\n4. Execute: Run *Manual: Execute - Send Warnings* (requires CONFIRM)"
+                        "text": "Dry run tests completed automatically (check messages above).\n\nTo actually send warnings:\n1. Review: <https://github.com/macadminsdotorg/slack-ploughshare/blob/main/state/channel_analysis.csv|View Analysis CSV>\n2. Review: Dry run summary posted above\n3. Execute: Run *Manual: Execute - Send Warnings* (requires CONFIRM)"
                     }
                 }
             ])
@@ -940,7 +940,7 @@ class ChannelAnalyzer:
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "1. Test: Run *Manual: Test Archive (Dry Run)* workflow\n2. Review: Check list of channels to be archived\n3. Execute: Run *Manual: Execute - Archive Channels* (requires CONFIRM)"
+                        "text": "Dry run archive test completed automatically (check messages above).\n\nTo actually archive:\n1. Review: Dry run results posted above\n2. Execute: Run *Manual: Execute - Archive Channels* (requires CONFIRM)"
                     }
                 }
             ])
