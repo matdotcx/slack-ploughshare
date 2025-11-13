@@ -3,7 +3,7 @@
 
 analysis:
   # Days of inactivity thresholds for categorising channels
-  days_dormant: 90        # Channels inactive for this many days are "dormant"
+  days_dormant: 380       # Channels inactive for this many days are "dormant" (12+ months)
   days_very_old: 550      # Channels inactive for this many days are "very old" (18 months)
 
   # Include private channels in analysis (requires groups:read scope)

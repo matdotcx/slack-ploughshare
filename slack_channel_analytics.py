@@ -707,15 +707,23 @@ class ChannelAnalyzer:
                     },
                     {
                         "type": "mrkdwn",
-                        "text": f"*Dormant ({days_dormant}+ days):*\n{len(categories['dormant'])} channels"
+                        "text": f"*Inactive ({days_dormant}+ days):*\n{len(categories['dormant']) + len(categories['very_old'])} channels"
                     },
                     {
                         "type": "mrkdwn",
-                        "text": f"*Very Old ({days_very_old}+ days):*\n{len(categories['very_old'])} channels"
+                        "text": f"*├─ Dormant ({days_dormant}-{days_very_old-1} days):*\n{len(categories['dormant'])} channels"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*└─ Very Old ({days_very_old}+ days):*\n{len(categories['very_old'])} channels"
                     },
                     {
                         "type": "mrkdwn",
                         "text": f"*Never Used:*\n{len(categories['never_used'])} channels"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": " "
                     }
                 ]
             }
