@@ -892,15 +892,24 @@ class ChannelAnalyzer:
             ])
 
             if dry_run:
-                blocks.append({
-                    "type": "context",
-                    "elements": [
-                        {
+                blocks.extend([
+                    {
+                        "type": "section",
+                        "text": {
                             "type": "mrkdwn",
-                            "text": f"To actually send warnings, run the *Execute: Send Warnings* workflow with CONFIRM"
+                            "text": "*Review Channels:*\n<https://github.com/macadminsdotorg/slack-ploughshare/blob/main/state/channel_analysis.csv|View Full Channel Analysis (CSV)> | <https://github.com/macadminsdotorg/slack-ploughshare/blob/main/state/channel_analysis.json|JSON>"
                         }
-                    ]
-                })
+                    },
+                    {
+                        "type": "context",
+                        "elements": [
+                            {
+                                "type": "mrkdwn",
+                                "text": "To actually send warnings, run the *Execute: Send Warnings* workflow with CONFIRM"
+                            }
+                        ]
+                    }
+                ])
         else:
             blocks.append({
                 "type": "section",
