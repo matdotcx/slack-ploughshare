@@ -835,6 +835,154 @@ class ChannelAnalyzer:
             "ready_to_archive": ready_to_archive
         }
 
+    def send_action_reminder_to_slack(self, dry_run=True):
+        """Send weekly reminder to Slack with current status and action items."""
+        reporting_config = self.config.get("reporting", {})
+        enabled = reporting_config.get("send_to_slack", False)
+        report_channel = reporting_config.get("slack_channel")
+
+        if not enabled or not report_channel:
+            return False
+
+        # Load current analysis data
+        output_config = self.config.get("output", {})
+        report_file = output_config.get("report_file", "state/channel_analysis.json")
+
+        if not Path(report_file).exists():
+            print("[WARNING] No analysis data found - run full analysis first")
+            return False
+
+        with open(report_file, "r") as f:
+            report = json.load(f)
+
+        categories = report.get("categories", {})
+        total_eligible = (
+            len(categories.get("dormant", []))
+            + len(categories.get("very_old", []))
+            + len(categories.get("never_used", []))
+        )
+
+        # Get warning tracker stats
+        tracker_stats = self.get_warning_tracker_stats()
+
+        # Build reminder message
+        blocks = [
+            {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Slack Ploughshare - Weekly Reminder"
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Current Workspace Status*"
+                }
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Channels Eligible for Warnings:*\n{total_eligible} channels (380+ days dormant)"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Already Warned:*\n{tracker_stats['warned']} channels"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Saved by Reactions:*\n{tracker_stats['saved']} channels"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Ready to Archive:*\n{tracker_stats['ready_to_archive']} channels (30+ days warned)"
+                    }
+                ]
+            },
+            {
+                "type": "divider"
+            }
+        ]
+
+        # Add action recommendations
+        if total_eligible - tracker_stats['warned'] > 0:
+            new_candidates = total_eligible - tracker_stats['warned']
+            blocks.extend([
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"*Recommended Action: Review {new_candidates} New Warning Candidates*"
+                    }
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "1. Review: <https://github.com/macadminsdotorg/slack-ploughshare/blob/main/state/channel_analysis.csv|View Analysis CSV>\n2. Test: Run *Manual: Test Warnings (Dry Run)* workflow\n3. Review: Check Slack for dry run summary\n4. Execute: Run *Manual: Execute - Send Warnings* (requires CONFIRM)"
+                    }
+                }
+            ])
+
+        if tracker_stats['ready_to_archive'] > 0:
+            blocks.extend([
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"*Action Available: {tracker_stats['ready_to_archive']} Channels Ready to Archive*"
+                    }
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "1. Test: Run *Manual: Test Archive (Dry Run)* workflow\n2. Review: Check list of channels to be archived\n3. Execute: Run *Manual: Execute - Archive Channels* (requires CONFIRM)"
+                    }
+                }
+            ])
+
+        if total_eligible - tracker_stats['warned'] == 0 and tracker_stats['ready_to_archive'] == 0:
+            blocks.append({
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "No action needed right now - workspace monitoring is active."
+                }
+            })
+
+        # Add footer
+        analysis_date = report.get("generated_at", "Unknown")
+        blocks.append({
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": f"Last analysis: {analysis_date[:10]} | Doing nothing is OK - channels remain as-is until you're ready"
+                }
+            ]
+        })
+
+        try:
+            if dry_run:
+                print(f"[DRY RUN] Would send weekly reminder to Slack channel: {report_channel}")
+                print(f"  Eligible: {total_eligible}, Warned: {tracker_stats['warned']}, Ready to archive: {tracker_stats['ready_to_archive']}")
+                return True
+            else:
+                response = self.client.chat_postMessage(
+                    channel=report_channel,
+                    text=f"Slack Ploughshare Weekly Reminder: {total_eligible} channels eligible for review",
+                    blocks=blocks
+                )
+                print(f"[SUCCESS] Sent weekly reminder to Slack channel: {report_channel}")
+                return True
+        except SlackApiError as e:
+            print(f"[ERROR] Failed to send reminder to Slack: {e.response['error']}")
+            return False
+
     def send_warning_summary_to_slack(self, warned_count, skipped_count, total_eligible, dry_run=True):
         """Send warning operation summary to Slack channel."""
         reporting_config = self.config.get("reporting", {})
@@ -1584,6 +1732,18 @@ def main():
                 print("[INFO] Sending report to Slack FOR REAL")
 
             analyzer.send_report_to_slack(report, categories, dry_run=dry_run)
+            return
+        elif arg == "--status-reminder":
+            print("[INFO] Sending weekly status reminder to Slack...")
+            analyzer = ChannelAnalyzer(token, config)
+
+            dry_run = "--for-real" not in sys.argv
+            if dry_run:
+                print("[INFO] DRY RUN: Would send reminder to Slack")
+            else:
+                print("[INFO] Sending reminder to Slack FOR REAL")
+
+            analyzer.send_action_reminder_to_slack(dry_run=dry_run)
             return
         elif arg == "--send-warnings":
             print("[INFO] Loading analysis from previous run...")

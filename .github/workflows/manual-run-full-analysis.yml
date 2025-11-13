@@ -1,4 +1,4 @@
-name: "Initialize: First Run Setup"
+name: "Manual: Run Full Channel Analysis"
 
 on:
   workflow_dispatch:
@@ -102,8 +102,8 @@ jobs:
           echo "- \`state/channel_analysis.csv\` - Full channel analysis data (CSV)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Next Steps:" >> $GITHUB_STEP_SUMMARY
-          echo "1. Run **Test: Dry Run Warnings** to see what would be warned" >> $GITHUB_STEP_SUMMARY
+          echo "1. Run **Manual: Test Warnings (Dry Run)** to see what would be warned" >> $GITHUB_STEP_SUMMARY
           echo "2. Review the output and adjust configuration if needed" >> $GITHUB_STEP_SUMMARY
-          echo "3. When ready, run **Execute: Send Warnings** to start tracking" >> $GITHUB_STEP_SUMMARY
+          echo "3. When ready, run **Manual: Execute - Send Warnings** to start tracking" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY

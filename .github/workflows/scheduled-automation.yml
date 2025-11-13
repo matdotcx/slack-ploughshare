@@ -1,0 +1,132 @@
+name: "Automated: Scheduled Monitoring & Reminders"
+
+on:
+  schedule:
+    # Daily at 9 AM UTC - Check reactions
+    - cron: '0 9 * * *'
+    # Weekly on Monday at 9 AM UTC - Status report + reminder
+    - cron: '0 9 * * 1'
+    # Monthly on 1st at 9 AM UTC - Full analysis
+    - cron: '0 9 1 * *'
+
+  # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Which automated task to run'
+        required: true
+        type: choice
+        options:
+          - daily-check-reactions
+          - weekly-status-reminder
+          - monthly-full-analysis
+        default: 'weekly-status-reminder'
+
+jobs:
+  determine-task:
+    runs-on: ubuntu-latest
+    outputs:
+      run_reactions: ${{ steps.decide.outputs.run_reactions }}
+      run_status: ${{ steps.decide.outputs.run_status }}
+      run_analysis: ${{ steps.decide.outputs.run_analysis }}
+    steps:
+      - name: Determine which tasks to run
+        id: decide
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger - run selected task
+            case "${{ inputs.task }}" in
+              daily-check-reactions)
+                echo "run_reactions=true" >> $GITHUB_OUTPUT
+                echo "run_status=false" >> $GITHUB_OUTPUT
+                echo "run_analysis=false" >> $GITHUB_OUTPUT
+                ;;
+              weekly-status-reminder)
+                echo "run_reactions=true" >> $GITHUB_OUTPUT
+                echo "run_status=true" >> $GITHUB_OUTPUT
+                echo "run_analysis=false" >> $GITHUB_OUTPUT
+                ;;
+              monthly-full-analysis)
+                echo "run_reactions=true" >> $GITHUB_OUTPUT
+                echo "run_status=true" >> $GITHUB_OUTPUT
+                echo "run_analysis=true" >> $GITHUB_OUTPUT
+                ;;
+            esac
+          else
+            # Scheduled trigger - determine by day of month
+            DAY_OF_MONTH=$(date -u +%d)
+            DAY_OF_WEEK=$(date -u +%u)
+
+            # Always check reactions on scheduled runs
+            echo "run_reactions=true" >> $GITHUB_OUTPUT
+
+            # Weekly status on Mondays
+            if [ "$DAY_OF_WEEK" = "1" ]; then
+              echo "run_status=true" >> $GITHUB_OUTPUT
+            else
+              echo "run_status=false" >> $GITHUB_OUTPUT
+            fi
+
+            # Monthly analysis on 1st of month
+            if [ "$DAY_OF_MONTH" = "01" ]; then
+              echo "run_analysis=true" >> $GITHUB_OUTPUT
+            else
+              echo "run_analysis=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+  check-reactions:
+    needs: determine-task
+    if: needs.determine-task.outputs.run_reactions == 'true'
+    uses: ./.github/workflows/slack-ploughshare.yml
+    secrets: inherit
+    with:
+      command: 'check-reactions'
+      dry_run: true
+      additional_flags: ''
+
+  monthly-analysis:
+    needs: determine-task
+    if: needs.determine-task.outputs.run_analysis == 'true'
+    uses: ./.github/workflows/manual-run-full-analysis.yml
+    secrets: inherit
+
+  weekly-status:
+    needs: [determine-task, check-reactions]
+    if: |
+      always() &&
+      needs.determine-task.outputs.run_status == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install slack-sdk python-dotenv pyyaml
+
+      - name: Pull latest state
+        run: |
+          git pull origin main || echo "[INFO] No changes to pull"
+
+      - name: Configure environment
+        run: |
+          echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" > .env
+
+      - name: Send status reminder to Slack
+        run: |
+          python slack_channel_analytics.py --status-reminder --for-real
+
+      - name: Generate summary
+        if: always()
+        run: |
+          echo "## Automated Status Report Sent" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Weekly status reminder posted to Slack" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY

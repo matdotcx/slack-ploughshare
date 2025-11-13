@@ -1,13 +1,13 @@
-name: "Test: Dry Run Warnings"
+name: "Manual: Check Reaction Status"
 
 on:
   workflow_dispatch:
 
 jobs:
-  test-warnings:
+  check-reactions:
     uses: ./.github/workflows/slack-ploughshare.yml
     secrets: inherit
     with:
-      command: 'send-warnings'
+      command: 'check-reactions'
       dry_run: true
       additional_flags: ''

@@ -1,4 +1,4 @@
-name: "Send: Analysis Report to Slack"
+name: "Manual: Send Analysis Report to Slack"
 
 on:
   workflow_dispatch:
