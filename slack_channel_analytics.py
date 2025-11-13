@@ -827,6 +827,111 @@ class ChannelAnalyzer:
             "ready_to_archive": ready_to_archive
         }
 
+    def send_warning_summary_to_slack(self, warned_count, skipped_count, total_eligible, dry_run=True):
+        """Send warning operation summary to Slack channel."""
+        reporting_config = self.config.get("reporting", {})
+        enabled = reporting_config.get("send_to_slack", False)
+        report_channel = reporting_config.get("slack_channel")
+
+        if not enabled or not report_channel:
+            return False
+
+        # Build summary message
+        if dry_run:
+            title_text = "Warning Dry Run Summary"
+            mode_text = "DRY RUN - No warnings were actually sent"
+            emoji = "🔍"
+        else:
+            title_text = "Warning Execution Summary"
+            mode_text = "Warnings were sent to channels"
+            emoji = "⚠️"
+
+        blocks = [
+            {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": f"{emoji} {title_text}"
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": f"*{mode_text}*"
+                }
+            },
+            {
+                "type": "divider"
+            }
+        ]
+
+        if total_eligible > 0:
+            blocks.extend([
+                {
+                    "type": "section",
+                    "fields": [
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*Total Eligible:*\n{total_eligible} channels"
+                        },
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*{'Would Warn' if dry_run else 'Warned'}:*\n{warned_count} channels"
+                        },
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*Skipped:*\n{skipped_count} channels"
+                        },
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*Already Warned:*\nNot re-warned"
+                        }
+                    ]
+                }
+            ])
+
+            if dry_run:
+                blocks.append({
+                    "type": "context",
+                    "elements": [
+                        {
+                            "type": "mrkdwn",
+                            "text": f"To actually send warnings, run the *Execute: Send Warnings* workflow with CONFIRM"
+                        }
+                    ]
+                })
+        else:
+            blocks.append({
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "✓ No channels need warnings at this time"
+                }
+            })
+
+        blocks.append({
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": f"Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}"
+                }
+            ]
+        })
+
+        try:
+            response = self.client.chat_postMessage(
+                channel=report_channel,
+                text=f"{title_text}: {warned_count} channels {'would be warned' if dry_run else 'warned'}",
+                blocks=blocks
+            )
+            print(f"[SUCCESS] Sent warning summary to Slack channel: {report_channel}")
+            return True
+        except SlackApiError as e:
+            print(f"[ERROR] Failed to send warning summary to Slack: {e.response['error']}")
+            return False
+
     def print_summary(self, categories):
         """Print a summary of findings."""
         output_config = self.config.get("output", {})
@@ -1539,8 +1644,16 @@ def main():
                 print(
                     f"\n[SUMMARY] Warned: {warned_count}, Skipped (already warned): {skipped_count}"
                 )
+
+                # Send summary to Slack if configured
+                if dry_run:
+                    analyzer.send_warning_summary_to_slack(
+                        warned_count, skipped_count, len(to_warn), dry_run=True
+                    )
             else:
                 print("[INFO] No channels to warn.")
+                # Send "no warnings needed" summary to Slack
+                analyzer.send_warning_summary_to_slack(0, 0, 0, dry_run=dry_run)
             return
         elif arg == "--help":
             print("Usage: python slack_channel_analytics.py [options]")

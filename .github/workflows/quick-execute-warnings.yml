@@ -32,6 +32,6 @@ jobs:
     uses: ./.github/workflows/slack-ploughshare.yml
     secrets: inherit
     with:
-      command: 'auto-warn'
+      command: 'send-warnings'
       dry_run: false
       additional_flags: ''
