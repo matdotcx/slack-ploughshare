@@ -50,13 +50,13 @@ cleanup:
 
   # Optional: Category-specific messages (leave empty to use default)
   warning_message_very_old: |
-    WARNING: This channel has been inactive for over 180 days and is scheduled for archival.
+    WARNING: This channel has been inactive for over 550 days (18 months) and is scheduled for archival.
 
     If this channel is still needed, please react with a thumbs up or post a message within 30 days.
     Otherwise it will be automatically archived on {archive_date}.
 
   warning_message_dormant: |
-    NOTICE: This channel has been dormant for 30+ days and is scheduled for archival.
+    NOTICE: This channel has been dormant for 380+ days (12+ months) and is scheduled for archival.
 
     React with a thumbs up or post a message within 30 days to keep it active.
     Archive date: {archive_date}
