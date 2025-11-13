@@ -67,43 +67,71 @@ cp slack_analytics_config.yaml.example slack_analytics_config.yaml
 
 ## How It Works
 
-### Automated Weekly Workflow
+### Automated Workflows
 
-Slack Ploughshare runs three jobs weekly with proper spacing to give users time to respond:
+Slack Ploughshare runs automated monitoring on a scheduled basis:
 
-1. **Analysis & Warnings** (e.g., Monday 1 AM)
-   - Scans all workspace channels
-   - Identifies inactive channels (30+ days dormant, 180+ very old, or never used)
-   - Sends warning messages to NEW inactive channels only
-   - Records warnings with 30-day deadline in `channel_warnings.json`
-   - Skips channels already warned
+1. **Daily (9 AM UTC)**
+   - Check reactions on warned channels
+   - Update warning tracker for saved channels
 
-2. **Reaction Check** (e.g., Monday 9 AM)
-   - Reviews all warned channels
-   - Checks for thumbs-up reactions on warning messages
-   - Marks channels as "saved" if reactions found
-   - Updates warning tracker
+2. **Weekly (Monday 9 AM UTC)**
+   - Check reactions on warned channels
+   - Run test warnings dry run (posts summary to Slack)
+   - Run test archive dry run (posts summary to Slack)
+   - Send status reminder to Slack with action items
 
-3. **Archival** (e.g., Monday 5 PM)
-   - Finds channels warned 30+ days ago
-   - Excludes channels saved by reactions
-   - Archives remaining inactive channels
-   - Logs all actions
+3. **Monthly (1st of month, 9 AM UTC)**
+   - Run full channel analysis (analyses all workspace channels)
+   - Check reactions
+   - Run test warnings and archive dry runs
+   - Send comprehensive status report
 
-### Timeline Example
+All automated workflows are **read-only** - they analyze, test, and report but never execute destructive actions without manual confirmation.
+
+### Manual Execution Workflows
+
+These workflows require manual triggering via GitHub Actions:
+
+**Analysis & Reporting:**
+- **Manual: Run Full Channel Analysis** - Re-run analysis outside monthly schedule
+- **Manual: Send Analysis Report to Slack** - Post analysis report to Slack channel
+- **Manual: View Warning Tracker Status** - Console-only status check
+
+**Testing (Dry Runs):**
+- **Manual: Test Warnings (Dry Run)** - Preview what warnings would be sent
+- **Manual: Test Archive (Dry Run)** - Preview what channels would be archived
+- **Manual: Check Reaction Status** - Check which channels have been saved by reactions
+
+**Execution (Requires CONFIRM):**
+- **Manual: Execute - Send Warnings (CONFIRM Required)** - Actually send warning messages
+- **Manual: Execute - Archive Channels (CONFIRM Required)** - Actually archive channels
+
+### Workflow Timeline Example
 
 ```
-Oct 7:  Channel #old-project warned (archive date: Nov 6)
-Oct 14: Reaction check - no reaction yet
-Oct 21: Reaction check - user added thumbs up - Channel saved
-Oct 28: Reaction check - still saved
-Nov 4:  Would have been archived, but saved by reaction
+Week 1 (Monday): Automated dry runs show #old-project would be warned
+Week 1 (Tuesday): Review dry runs, run "Execute - Send Warnings" with CONFIRM
+                  Channel #old-project warned (archive scheduled 30 days out)
 
-Oct 7:  Channel #abandoned-temp warned (archive date: Nov 6)
-Oct 14: Reaction check - no reaction
-Oct 21: Reaction check - no reaction
-Oct 28: Reaction check - no reaction
-Nov 4:  No reaction after 30 days - ARCHIVED
+Week 2 (Monday): Automated reaction check runs
+Week 2 (Tuesday): User adds thumbs-up reaction - Channel saved
+
+Week 3 (Monday): Automated reaction check confirms channel still saved
+Week 4 (Monday): Automated reaction check confirms channel still saved
+
+Week 5 (Monday): Automated dry run shows #old-project won't be archived (saved by reaction)
+
+---
+
+Week 1 (Monday): Automated dry runs show #abandoned-temp would be warned
+Week 1 (Tuesday): Review dry runs, run "Execute - Send Warnings" with CONFIRM
+                  Channel #abandoned-temp warned (archive scheduled 30 days out)
+
+Week 2-5 (Monday): Automated checks find no reactions
+Week 5 (Monday): Automated dry run shows #abandoned-temp ready for archival
+Week 5 (Tuesday): Review dry runs, run "Execute - Archive Channels" with CONFIRM
+                  Channel #abandoned-temp archived
 ```
 
 ## Usage
@@ -230,40 +258,43 @@ You can run Slack Ploughshare in two ways:
 
 ### How It Works
 
-**Single Pane of Glass:**
-GitHub Actions provides one interface for all operations:
-- **Quick Actions** - One-click buttons for common tasks
-- **Safe Testing** - Dry-run modes test without making changes
-- **Confirmation Required** - Execute actions require typing "CONFIRM"
-- **Full Control** - Advanced mode with all options and flags
+**Automated Monitoring:**
+GitHub Actions runs scheduled workflows automatically:
+- **Daily (9 AM UTC)** - Check reactions on warned channels
+- **Weekly (Monday 9 AM UTC)** - Full status check with dry run reports posted to Slack
+- **Monthly (1st, 9 AM UTC)** - Complete workspace analysis
 
-**Available Quick Actions:**
-- `View: Warning Report` - See current status (read-only)
-- `Check: User Reactions` - Check for thumbs up reactions (read-only)
-- `Test: Dry Run Warnings` - Test warning system safely
-- `Test: Dry Run Archive` - Test archive system safely
-- `Execute: Send Warnings` - Send warnings (requires CONFIRM)
-- `Execute: Archive Channels` - Archive channels (requires CONFIRM)
-- `Slack Ploughshare` - Advanced mode with full options
+**Available Workflows:**
 
-**Automated Schedule:**
-- Runs weekly on configured days/times
-- Automatically persists state using GitHub Artifacts
-- `channel_warnings.json` stored between runs (90 days)
-- Logs available for 14 days
-- No manual intervention needed once configured
+*Automated:*
+- **Automated: Scheduled Monitoring & Reminders** - Runs daily/weekly/monthly checks
+
+*Manual - Analysis & Reporting:*
+- **Manual: Run Full Channel Analysis** - Full workspace scan
+- **Manual: Send Analysis Report to Slack** - Post analysis to Slack
+- **Manual: View Warning Tracker Status** - Console status check
+
+*Manual - Testing (Safe):*
+- **Manual: Test Warnings (Dry Run)** - Preview warnings (posts to Slack)
+- **Manual: Test Archive (Dry Run)** - Preview archival (posts to Slack)
+- **Manual: Check Reaction Status** - Check saved channels
+
+*Manual - Execution (Destructive):*
+- **Manual: Execute - Send Warnings (CONFIRM Required)** - Actually send warnings
+- **Manual: Execute - Archive Channels (CONFIRM Required)** - Actually archive channels
 
 **State Persistence:**
-- Warning tracker stored as artifact (90 day retention)
-- Downloaded at start of each run
-- Uploaded after each run
-- Maintains 30-day warning periods across executions
+- State files tracked in git repository
+- GitHub Actions commits state updates after each run
+- Warning tracker maintains 30-day warning periods
+- Each workspace maintains its own state
 
 **Safety Features:**
-- Dry-run by default for manual triggers
-- Execute actions require typing "CONFIRM"
+- Automated workflows are read-only (analyze and report only)
+- Execute workflows require typing "CONFIRM"
+- Dry runs post results to Slack before execution
 - Full execution logs and summaries
-- Artifact history for rollback if needed
+- State history tracked in git for audit trail
 
 ### Monitoring
 
@@ -420,8 +451,8 @@ Edit `slack_analytics_config.yaml` to customise:
 ### Analysis Thresholds
 ```yaml
 analysis:
-  days_dormant: 30        # Channels inactive for 30+ days
-  days_very_old: 180      # Channels inactive for 180+ days
+  days_dormant: 380       # Channels inactive for 380+ days (12+ months)
+  days_very_old: 550      # Channels inactive for 550+ days (18 months)
 ```
 
 ### Automation Settings
@@ -506,8 +537,8 @@ This prevents duplicate warnings and enables the 30-day warning period workflow.
 Channels are categorized as:
 
 - **Active** - Recent activity (within threshold)
-- **Dormant** - Inactive for 30+ days (configurable)
-- **Very Old** - Inactive for 180+ days (configurable)
+- **Dormant** - Inactive for 380+ days / 12+ months (configurable)
+- **Very Old** - Inactive for 550+ days / 18 months (configurable)
 - **Never Used** - Zero messages ever posted
 
 ## Troubleshooting
