@@ -88,6 +88,14 @@ output:
   # Show last message date in output
   show_last_message_date: true
 
+reporting:
+  # Send analysis report to Slack channel
+  send_to_slack: true
+
+  # Slack channel ID or name to send reports to (e.g., "C1234567890" or "#admin-reports")
+  # You can find the channel ID by right-clicking a channel > View channel details > scroll down
+  slack_channel: "C09SP0TT9GS"
+
 logging:
   # Verbose output
   verbose: false

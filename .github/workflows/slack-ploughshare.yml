@@ -38,6 +38,7 @@ on:
           - auto-archive
           - warning-report
           - send-warnings
+          - send-report
       dry_run:
         description: 'Execution mode'
         required: true

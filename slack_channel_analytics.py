@@ -642,6 +642,191 @@ class ChannelAnalyzer:
 
         return report, categories
 
+    def send_report_to_slack(self, report, categories, dry_run=True):
+        """Send analysis report to a Slack channel."""
+        reporting_config = self.config.get("reporting", {})
+        enabled = reporting_config.get("send_to_slack", False)
+        report_channel = reporting_config.get("slack_channel")
+
+        if not enabled:
+            return False
+
+        if not report_channel:
+            print("[WARNING] Slack reporting enabled but no channel configured")
+            return False
+
+        # Build the message
+        analysis_config = self.config.get("analysis", {})
+        days_dormant = analysis_config.get("days_dormant", 30)
+        days_very_old = analysis_config.get("days_very_old", 180)
+
+        cleanup_total = (
+            len(categories["dormant"])
+            + len(categories["never_used"])
+            + len(categories["very_old"])
+        )
+
+        # Format the Slack message using Slack's Block Kit
+        blocks = [
+            {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Slack Workspace Channel Analysis Report"
+                }
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Analysis Date:*\n{datetime.now().strftime('%Y-%m-%d %H:%M UTC')}"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Total Channels:*\n{len(self.channels)}"
+                    }
+                ]
+            },
+            {
+                "type": "divider"
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Channel Status Overview*"
+                }
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Active:*\n{len(categories['active'])} channels"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Dormant ({days_dormant}+ days):*\n{len(categories['dormant'])} channels"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Very Old ({days_very_old}+ days):*\n{len(categories['very_old'])} channels"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Never Used:*\n{len(categories['never_used'])} channels"
+                    }
+                ]
+            }
+        ]
+
+        # Add cleanup candidates section if there are any
+        if cleanup_total > 0:
+            blocks.extend([
+                {
+                    "type": "divider"
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"*Cleanup Candidates:* {cleanup_total} channels eligible for review"
+                    }
+                }
+            ])
+
+        # Add warning tracker statistics if available
+        tracker_stats = self.get_warning_tracker_stats()
+        if tracker_stats["total_tracked"] > 0:
+            blocks.extend([
+                {
+                    "type": "divider"
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "*Warning Tracker Status*"
+                    }
+                },
+                {
+                    "type": "section",
+                    "fields": [
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*Warned:*\n{tracker_stats['warned']} channels"
+                        },
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*Saved by Reaction:*\n{tracker_stats['saved']} channels"
+                        },
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*Archived:*\n{tracker_stats['archived']} channels"
+                        },
+                        {
+                            "type": "mrkdwn",
+                            "text": f"*Ready to Archive:*\n{tracker_stats['ready_to_archive']} channels"
+                        }
+                    ]
+                }
+            ])
+
+        # Add configuration info
+        blocks.append({
+            "type": "context",
+            "elements": [
+                {
+                    "type": "mrkdwn",
+                    "text": f"Configuration: {days_dormant} days dormant threshold, {days_very_old} days very old threshold"
+                }
+            ]
+        })
+
+        try:
+            if dry_run:
+                print(f"[DRY RUN] Would send report to Slack channel: {report_channel}")
+                print(f"  Summary: {len(self.channels)} total, {cleanup_total} cleanup candidates")
+                return True
+            else:
+                response = self.client.chat_postMessage(
+                    channel=report_channel,
+                    text=f"Slack Workspace Analysis: {len(self.channels)} channels analyzed, {cleanup_total} cleanup candidates",
+                    blocks=blocks
+                )
+                print(f"[SUCCESS] Sent report to Slack channel: {report_channel}")
+                return True
+        except SlackApiError as e:
+            print(f"[ERROR] Failed to send report to Slack: {e.response['error']}")
+            return False
+
+    def get_warning_tracker_stats(self):
+        """Get statistics from the warning tracker."""
+        channels = self.warning_tracker.data.get("channels", {})
+
+        warned = sum(1 for ch in channels.values() if ch.get("status") == "warned")
+        saved = sum(1 for ch in channels.values() if ch.get("status") == "saved")
+        archived = sum(1 for ch in channels.values() if ch.get("status") == "archived")
+
+        # Count channels ready to archive (warned 30+ days ago, not saved)
+        ready_to_archive = 0
+        for ch in channels.values():
+            if ch.get("status") == "warned" and not ch.get("saved_by_reaction", False):
+                archive_date_str = ch.get("archive_scheduled_for")
+                if archive_date_str:
+                    archive_date = datetime.fromisoformat(archive_date_str)
+                    if datetime.now() >= archive_date:
+                        ready_to_archive += 1
+
+        return {
+            "total_tracked": len(channels),
+            "warned": warned,
+            "saved": saved,
+            "archived": archived,
+            "ready_to_archive": ready_to_archive
+        }
+
     def print_summary(self, categories):
         """Print a summary of findings."""
         output_config = self.config.get("output", {})
@@ -1251,6 +1436,33 @@ def main():
             analyzer = ChannelAnalyzer(token, config)
             analyzer.print_warning_report()
             return
+        elif arg == "--send-report":
+            print("[INFO] Sending analysis report to Slack...")
+            # Try to load from saved report
+            output_config = config.get("output", {})
+            report_file = output_config.get("report_file", "state/channel_analysis.json")
+
+            if not Path(report_file).exists():
+                print(f"[ERROR] No saved report found at {report_file}")
+                print("Run analysis first: python slack_channel_analytics.py")
+                return
+
+            with open(report_file, "r") as f:
+                report = json.load(f)
+
+            # Reconstruct categories from report
+            categories = report.get("categories", {})
+
+            analyzer = ChannelAnalyzer(token, config)
+
+            dry_run = "--for-real" not in sys.argv
+            if dry_run:
+                print("[INFO] DRY RUN: Would send report to Slack")
+            else:
+                print("[INFO] Sending report to Slack FOR REAL")
+
+            analyzer.send_report_to_slack(report, categories, dry_run=dry_run)
+            return
         elif arg == "--send-warnings":
             print("[INFO] Loading analysis from previous run...")
             # Try to load from saved report
@@ -1353,6 +1565,7 @@ def main():
                 "  --auto-archive         Archive channels past 30-day warning period (for cron)"
             )
             print("  --warning-report       Show detailed warning status report")
+            print("  --send-report          Send analysis report to Slack channel")
             print(
                 "  --force-warnings       Re-warn channels even if already warned (use with --send-warnings)"
             )
@@ -1466,6 +1679,9 @@ def main():
     print(f"\nReport saved to: {report_file}")
     if export_csv:
         print(f"CSV export saved to: {csv_file}")
+
+    # Send report to Slack if configured
+    analyzer.send_report_to_slack(report, categories, dry_run=False)
 
     # Dry run - show what would be archived
     print("\n" + "=" * 70)

@@ -1,0 +1,13 @@
+name: "Send: Analysis Report to Slack"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send-report:
+    uses: ./.github/workflows/slack-ploughshare.yml
+    secrets: inherit
+    with:
+      command: 'send-report'
+      dry_run: false
+      additional_flags: '--for-real'
