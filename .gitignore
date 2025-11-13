@@ -29,8 +29,9 @@ wheels/
 # Local config override
 slack_analytics_config.yaml
 
-# Note: state/ directory is tracked by git for persistence
-# GitHub Actions commits state files after each run
+# State files - not tracked to allow each repo to maintain its own state
+state/*.csv
+state/*.json
 
 # IDE
 .vscode/
