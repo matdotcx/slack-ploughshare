@@ -46,6 +46,11 @@ jobs:
           echo "[INFO] Analysis complete - checking files..."
           ls -lh state/channel_*.json state/channel_*.csv 2>/dev/null || echo "[WARNING] Analysis files not found"
 
+      - name: Send report to Slack
+        run: |
+          echo "[INFO] Sending analysis report to Slack..."
+          python slack_channel_analytics.py --send-report --for-real
+
       - name: Commit state to repository
         run: |
           git config user.name "github-actions[bot]"
