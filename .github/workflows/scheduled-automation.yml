@@ -133,7 +133,7 @@ jobs:
 
       - name: Configure environment
         run: |
-          echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" > .env
+          echo "SLACK_USER_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" > .env
 
       - name: Send status reminder to Slack
         run: |

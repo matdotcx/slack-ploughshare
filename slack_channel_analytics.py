@@ -1619,10 +1619,10 @@ def main():
     # Load configuration
     config = load_config()
 
-    token = os.getenv("SLACK_BOT_TOKEN")
+    token = os.getenv("SLACK_USER_TOKEN")
 
     if not token:
-        print("Error: SLACK_BOT_TOKEN not found in .env file")
+        print("Error: SLACK_USER_TOKEN not found in .env file")
         return
 
     # Check for command line argument
