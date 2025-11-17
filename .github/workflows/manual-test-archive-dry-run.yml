@@ -2,6 +2,7 @@ name: "Manual: Test Archive (Dry Run)"
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   test-archive:
