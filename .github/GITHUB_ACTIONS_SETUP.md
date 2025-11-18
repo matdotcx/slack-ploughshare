@@ -37,8 +37,8 @@ git push -u origin main
 3. In the left sidebar, click **Secrets and variables** > **Actions**
 4. Click **New repository secret**
 5. Fill in:
-   - **Name:** `SLACK_USER_TOKEN`
-   - **Secret:** Your Slack user token (starts with `xoxp-`)
+   - **Name:** `SLACK_BOT_TOKEN`
+   - **Secret:** Your Slack bot token (starts with `xoxb-`)
 6. Click **Add secret**
 
 ### 3. Customize Configuration (Optional)
@@ -202,12 +202,12 @@ Each run shows a summary with:
 
 **Note:** GitHub may delay scheduled workflows by up to 10 minutes during high load.
 
-### "Error: SLACK_USER_TOKEN not found"
+### "Error: SLACK_BOT_TOKEN not found"
 
 **Fix:**
 1. Go to Settings > Secrets and variables > Actions
-2. Verify `SLACK_USER_TOKEN` secret exists
-3. Check the name is exactly `SLACK_USER_TOKEN` (case-sensitive)
+2. Verify `SLACK_BOT_TOKEN` secret exists
+3. Check the name is exactly `SLACK_BOT_TOKEN` (case-sensitive)
 4. Re-add the secret if needed
 
 ### No warning tracker artifact found

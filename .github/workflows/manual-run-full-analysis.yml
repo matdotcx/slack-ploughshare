@@ -26,7 +26,7 @@ jobs:
 
       - name: Configure environment
         run: |
-          echo "SLACK_USER_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" > .env
+          echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" > .env
           mkdir -p logs
 
       - name: Initialize warning tracker

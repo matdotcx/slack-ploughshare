@@ -81,7 +81,7 @@ jobs:
 
       - name: Configure environment
         run: |
-          echo "SLACK_USER_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" > .env
+          echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" > .env
 
           # Copy config if it doesn't exist
           if [ ! -f "slack_analytics_config.yaml" ]; then

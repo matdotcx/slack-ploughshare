@@ -56,7 +56,7 @@ cp .env.example .env
 
 Edit `.env` and add your token:
 ```
-SLACK_USER_TOKEN=xoxp-your-user-token-here
+SLACK_BOT_TOKEN=xoxb-your-bot-token-here
 ```
 
 5. Configure settings (optional):
@@ -222,8 +222,8 @@ You can run Slack Ploughshare in two ways:
    - Go to your repository on GitHub
    - Settings > Secrets and variables > Actions
    - Click "New repository secret"
-   - Name: `SLACK_USER_TOKEN`
-   - Value: Your Slack user token (starts with `xoxp-`)
+   - Name: `SLACK_BOT_TOKEN`
+   - Value: Your Slack bot token (starts with `xoxb-`)
    - Click "Add secret"
 
 3. **Customize schedule (optional):**
@@ -355,7 +355,7 @@ pip3 install slack-sdk python-dotenv pyyaml
 3. Configure:
 ```bash
 cp .env.example .env
-nano .env  # Add your SLACK_USER_TOKEN
+nano .env  # Add your SLACK_BOT_TOKEN
 
 cp slack_analytics_config.yaml.example slack_analytics_config.yaml
 nano slack_analytics_config.yaml  # Customize schedules and thresholds
