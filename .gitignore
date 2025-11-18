@@ -1,6 +1,9 @@
 # Environment variables
 .env
 
+# Temporary/local scripts
+delete_warnings.py
+
 # Python
 __pycache__/
 *.py[cod]

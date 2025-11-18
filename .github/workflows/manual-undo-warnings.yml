@@ -1,0 +1,123 @@
+name: "Manual: Undo Warnings (Delete Warning Messages)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "CONFIRM" to delete warning messages from channels'
+        required: true
+        type: string
+      limit:
+        description: 'Test mode: limit to N channels (leave empty for all)'
+        required: false
+        type: string
+        default: ''
+      clear_tracker:
+        description: 'Clear warning tracker after deletion?'
+        required: true
+        type: boolean
+        default: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      confirmed: ${{ steps.check.outputs.confirmed }}
+      limit_arg: ${{ steps.check.outputs.limit_arg }}
+    steps:
+      - name: Validate confirmation
+        id: check
+        run: |
+          if [ "${{ inputs.confirm }}" = "CONFIRM" ]; then
+            echo "confirmed=true" >> $GITHUB_OUTPUT
+            echo "Confirmation received - proceeding with warning deletion"
+          else
+            echo "confirmed=false" >> $GITHUB_OUTPUT
+            echo "ERROR: Must type CONFIRM to proceed"
+            exit 1
+          fi
+
+          # Set limit argument if provided
+          if [ -n "${{ inputs.limit }}" ]; then
+            echo "limit_arg=--limit ${{ inputs.limit }}" >> $GITHUB_OUTPUT
+            echo "Test mode: will delete from ${{ inputs.limit }} channel(s)"
+          else
+            echo "limit_arg=" >> $GITHUB_OUTPUT
+            echo "Will delete from ALL channels"
+          fi
+
+  undo-warnings:
+    needs: validate
+    if: needs.validate.outputs.confirmed == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install slack-sdk python-dotenv pyyaml
+
+      - name: Pull latest state
+        run: |
+          git pull origin main || echo "[INFO] No changes to pull"
+
+      - name: Configure environment
+        run: |
+          echo "SLACK_USER_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" > .env
+
+      - name: Delete warning messages
+        run: |
+          python3 scripts/undo_warnings.py --for-real ${{ needs.validate.outputs.limit_arg }}
+
+      - name: Clear warning tracker
+        if: inputs.clear_tracker == true
+        run: |
+          echo "[INFO] Clearing warning tracker..."
+          rm -f state/channel_warnings.json
+          python3 -c "from slack_channel_analytics import WarningTracker; tracker = WarningTracker(); print('[INFO] Warning tracker cleared')"
+
+      - name: Commit cleared tracker
+        if: inputs.clear_tracker == true
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add state/channel_warnings.json
+
+          if git diff --staged --quiet; then
+            echo "[INFO] No tracker changes to commit"
+          else
+            git commit -m "chore: clear warning tracker after undo"
+            git push origin main
+            echo "[INFO] Cleared tracker committed to repository"
+          fi
+
+      - name: Generate summary
+        if: always()
+        run: |
+          echo "## Warning Messages Deleted" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -n "${{ inputs.limit }}" ]; then
+            echo "**Mode:** Test (limited to ${{ inputs.limit }} channels)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Mode:** Full deletion (all channels)" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "**Tracker cleared:** ${{ inputs.clear_tracker }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ inputs.clear_tracker }}" = "true" ]; then
+            echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+            echo "1. Run 'Manual: Execute - Send Warnings' to send corrected warnings" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+            echo "1. Manually clear the warning tracker if needed" >> $GITHUB_STEP_SUMMARY
+            echo "2. Run 'Manual: Execute - Send Warnings' to send corrected warnings" >> $GITHUB_STEP_SUMMARY
+          fi
