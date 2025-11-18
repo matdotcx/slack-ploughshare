@@ -1400,20 +1400,23 @@ class ChannelAnalyzer:
         warned_count = 0
         skipped_count = 0
 
+        # Build category lookup by channel_id for reliable detection
+        category_lookup = {}
+        for ch in categories["very_old"]:
+            category_lookup[ch["channel_id"]] = "very_old"
+        for ch in categories["dormant"]:
+            category_lookup[ch["channel_id"]] = "dormant"
+        for ch in categories["never_used"]:
+            category_lookup[ch["channel_id"]] = "never_used"
+
         for channel in sorted(to_warn, key=lambda x: x["channel_name"]):
             # Check if already warned
             if self.warning_tracker.is_warned(channel["channel_id"]) and not dry_run:
                 skipped_count += 1
                 continue
 
-            # Determine category
-            category = None
-            if channel in categories["very_old"]:
-                category = "very_old"
-            elif channel in categories["dormant"]:
-                category = "dormant"
-            elif channel in categories["never_used"]:
-                category = "never_used"
+            # Determine category by channel_id
+            category = category_lookup.get(channel["channel_id"])
 
             result = self.send_warning_message(
                 channel["channel_id"],
@@ -1788,15 +1791,19 @@ def main():
             if to_warn:
                 warned_count = 0
                 skipped_count = 0
+
+                # Build category lookup by channel_id for reliable detection
+                category_lookup = {}
+                for ch in report["categories"]["very_old"]:
+                    category_lookup[ch["channel_id"]] = "very_old"
+                for ch in report["categories"]["dormant"]:
+                    category_lookup[ch["channel_id"]] = "dormant"
+                for ch in report["categories"]["never_used"]:
+                    category_lookup[ch["channel_id"]] = "never_used"
+
                 for channel in sorted(to_warn, key=lambda x: x["channel_name"]):
-                    # Determine category
-                    category = None
-                    if channel in report["categories"]["very_old"]:
-                        category = "very_old"
-                    elif channel in report["categories"]["dormant"]:
-                        category = "dormant"
-                    elif channel in report["categories"]["never_used"]:
-                        category = "never_used"
+                    # Determine category by channel_id
+                    category = category_lookup.get(channel["channel_id"])
 
                     # Check if already warned
                     if (
