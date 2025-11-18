@@ -2,6 +2,7 @@ name: "Manual: Run Full Channel Analysis"
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   initialize:
