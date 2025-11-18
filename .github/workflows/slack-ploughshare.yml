@@ -79,17 +79,6 @@ jobs:
           ls -lh state/channel_warnings.json 2>/dev/null && echo "[INFO] Warning tracker found" || echo "[INFO] No warning tracker yet"
           ls -lh state/channel_analysis.* 2>/dev/null && echo "[INFO] Analysis data found" || echo "[INFO] No analysis data yet"
 
-      - name: Configure environment
-        run: |
-          echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" > .env
-
-          # Copy config if it doesn't exist
-          if [ ! -f "slack_analytics_config.yaml" ]; then
-            cp slack_analytics_config.yaml.example slack_analytics_config.yaml
-          fi
-
-          mkdir -p logs
-
       - name: Determine command to run
         id: determine-command
         run: |
@@ -144,6 +133,29 @@ jobs:
           echo "additional=$ADDITIONAL" >> $GITHUB_OUTPUT
           echo "mode=$MODE" >> $GITHUB_OUTPUT
           echo "[$MODE] Running: python slack_channel_analytics.py --$COMMAND $DRY_RUN $ADDITIONAL"
+
+      - name: Configure environment
+        run: |
+          # Use different tokens for different operations:
+          # - Analysis operations need USER token (can read all channel history)
+          # - Warning/archive operations need BOT token (has chat:write.public)
+
+          COMMAND="${{ steps.determine-command.outputs.command }}"
+
+          if [[ "$COMMAND" == "full-analysis" ]] || [[ "$COMMAND" == "warning-report" ]]; then
+            echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" > .env
+            echo "[INFO] Using USER token for analysis (can read all channel history)"
+          else
+            echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" > .env
+            echo "[INFO] Using BOT token for warnings/archive (has chat:write.public)"
+          fi
+
+          # Copy config if it doesn't exist
+          if [ ! -f "slack_analytics_config.yaml" ]; then
+            cp slack_analytics_config.yaml.example slack_analytics_config.yaml
+          fi
+
+          mkdir -p logs
 
       - name: Run Slack Ploughshare
         run: |
