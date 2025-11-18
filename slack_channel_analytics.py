@@ -1284,36 +1284,6 @@ class ChannelAnalyzer:
         except SlackApiError as e:
             if dry_run:
                 print(f"  [DRY RUN] Would send warning to {channel_id}{name_str}")
-            elif e.response['error'] == 'not_in_channel':
-                # Auto-join the channel and retry
-                print(f"  [INFO] Not in channel {channel_id}{name_str}, joining...")
-                try:
-                    self.client.conversations_join(channel=channel_id)
-                    print(f"  [INFO] Joined {channel_id}{name_str}, retrying warning...")
-                    time.sleep(0.5)  # Brief delay after joining
-
-                    # Retry posting the message
-                    response = self.client.chat_postMessage(
-                        channel=channel_id, text=message
-                    )
-                    message_ts = response.get("ts")
-
-                    # Record warning in tracker
-                    self.warning_tracker.record_warning(
-                        channel_id=channel_id,
-                        channel_name=channel_name or channel_id,
-                        category=category or "unknown",
-                        message_ts=message_ts,
-                        warning_days=warning_days,
-                    )
-
-                    print(f"  [SUCCESS] Sent warning message to {channel_id}{name_str}")
-                    return True
-                except SlackApiError as join_error:
-                    print(
-                        f"  [ERROR] Failed to join/warn {channel_id}{name_str}: {join_error.response['error']}"
-                    )
-                    return False
             else:
                 print(
                     f"  [ERROR] Failed to send warning to {channel_id}{name_str}: {e.response['error']}"
