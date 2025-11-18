@@ -47,24 +47,45 @@ def get_channel_ids_from_slack():
     channel_ids = {}
 
     try:
-        # Fetch all channels
-        response = client.conversations_list(types="public_channel,private_channel", limit=1000)
+        # Fetch all channels with pagination
+        cursor = None
+        total_checked = 0
 
-        for channel in response["channels"]:
-            channel_name = channel["name"]
-            if channel_name in test_channel_names:
-                category = test_channel_names[channel_name]
-                channel_ids[category] = {
-                    "id": channel["id"],
-                    "name": channel_name
-                }
-                print(f"Found #{channel_name}: {channel['id']}")
+        while True:
+            response = client.conversations_list(
+                types="public_channel,private_channel",
+                limit=1000,
+                cursor=cursor
+            )
 
+            for channel in response["channels"]:
+                total_checked += 1
+                channel_name = channel["name"]
+                if channel_name in test_channel_names:
+                    category = test_channel_names[channel_name]
+                    channel_ids[category] = {
+                        "id": channel["id"],
+                        "name": channel_name
+                    }
+                    print(f"Found #{channel_name}: {channel['id']}")
+
+            # Check if all found
+            if len(channel_ids) == len(test_channel_names):
+                print(f"All test channels found (checked {total_checked} channels)")
+                return channel_ids
+
+            # Check for more pages
+            cursor = response.get("response_metadata", {}).get("next_cursor")
+            if not cursor:
+                break
+
+        # Some channels missing
         missing = [name for name in test_channel_names if test_channel_names[name] not in channel_ids]
         if missing:
             print(f"\nWarning: Could not find these test channels in Slack:")
             for name in missing:
                 print(f"  - #{name}")
+            print(f"\nChecked {total_checked} channels total.")
             print("\nCreate them in Slack first, then run this script again.")
             return None
 
