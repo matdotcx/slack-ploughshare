@@ -117,8 +117,9 @@ logging:
 
 rate_limiting:
   # Delay between API calls in milliseconds (default: 100ms = 0.1s)
-  # Slack allows ~60 requests per minute, so 100ms delay is conservative
-  delay_between_requests_ms: 100
+  # Slack allows ~60 requests per minute, so 500ms delay is very conservative
+  # Increased to 500ms to be safe when analyzing 1500+ channels
+  delay_between_requests_ms: 500
 
   # Enable smart rate limiting (respects Slack's rate limit headers)
   smart_rate_limiting: true
