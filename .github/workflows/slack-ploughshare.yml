@@ -93,10 +93,11 @@ jobs:
       - name: Determine command to run
         id: determine-command
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            # Manual trigger - advanced mode
+          # Check if called from another workflow (workflow_call or boolean dry_run)
+          if [ "${{ github.event_name }}" = "workflow_call" ] || [ "${{ inputs.dry_run }}" = "true" ] || [ "${{ inputs.dry_run }}" = "false" ]; then
+            # Called by another workflow (or advanced manual with boolean dry_run)
             COMMAND="${{ inputs.command }}"
-            if [[ "${{ inputs.dry_run }}" == *"Execute For Real"* ]]; then
+            if [ "${{ inputs.dry_run }}" != "true" ]; then
               DRY_RUN="--for-real"
               MODE="EXECUTE"
             else
@@ -104,10 +105,10 @@ jobs:
               MODE="DRY RUN"
             fi
             ADDITIONAL="${{ inputs.additional_flags }}"
-          elif [ "${{ github.event_name }}" = "workflow_call" ]; then
-            # Called by another workflow
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # Manual trigger - advanced mode with string dry_run
             COMMAND="${{ inputs.command }}"
-            if [ "${{ inputs.dry_run }}" != "true" ]; then
+            if [[ "${{ inputs.dry_run }}" == *"Execute For Real"* ]]; then
               DRY_RUN="--for-real"
               MODE="EXECUTE"
             else
