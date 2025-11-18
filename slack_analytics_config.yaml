@@ -50,22 +50,31 @@ cleanup:
 
   # Optional: Category-specific messages (leave empty to use default)
   warning_message_very_old: |
-    WARNING: This channel has been inactive for over 550 days (18 months) and is scheduled for archival.
+    Hi there! We're cleaning up inactive channels to keep our workspace organised.
 
-    If this channel is still needed, please react with a thumbs up or post a message within 30 days.
-    Otherwise it will be automatically archived on {archive_date}.
+    This channel hasn't had any activity for over 550 days (18 months), so it's scheduled to be archived on {archive_date}.
+
+    If you still need this channel, simply react to this message with a :thumbsup: or post a message here within the next 30 days and we'll keep it active.
+
+    See <https://macadmins.slack.com/archives/C19MR7EM9/p1763461139463849|this post in #general> for more information.
 
   warning_message_dormant: |
-    NOTICE: This channel has been dormant for 380+ days (12+ months) and is scheduled for archival.
+    Hi! As part of our workspace cleanup, we're archiving channels that haven't been used recently.
 
-    React with a thumbs up or post a message within 30 days to keep it active.
-    Archive date: {archive_date}
+    This channel has been dormant for 380+ days (12+ months) and is scheduled for archival on {archive_date}.
+
+    Want to keep it? Just react with a :thumbsup: or post a message here within 30 days.
+
+    See <https://macadmins.slack.com/archives/C19MR7EM9/p1763461139463849|this post in #general> for more information.
 
   warning_message_never_used: |
-    This channel was created but has never been used.
+    Hello! We noticed this channel was created but hasn't been used yet.
 
-    If you still need it, react with a thumbs up or post a message by {archive_date}.
-    Otherwise it will be archived to keep the workspace organized.
+    To keep our workspace tidy, we're planning to archive it on {archive_date}.
+
+    If you still need this channel, react with a :thumbsup: or post a message here and we'll keep it around.
+
+    See <https://macadmins.slack.com/archives/C19MR7EM9/p1763461139463849|this post in #general> for more information.
 
   # Reactions that save a channel from archival
   # Users can react with any of these to mark the channel as "keep"

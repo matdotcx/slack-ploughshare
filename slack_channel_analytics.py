@@ -1253,7 +1253,7 @@ class ChannelAnalyzer:
 
         # Replace placeholder
         archive_date = (datetime.now() + timedelta(days=warning_days)).strftime(
-            "%Y-%m-%d"
+            "%B %d, %Y"
         )
         message = message.replace("{archive_date}", archive_date)
 
