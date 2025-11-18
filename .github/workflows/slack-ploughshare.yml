@@ -107,7 +107,7 @@ jobs:
           elif [ "${{ github.event_name }}" = "workflow_call" ]; then
             # Called by another workflow
             COMMAND="${{ inputs.command }}"
-            if [ "${{ inputs.dry_run }}" = "false" ]; then
+            if [ "${{ inputs.dry_run }}" != "true" ]; then
               DRY_RUN="--for-real"
               MODE="EXECUTE"
             else
