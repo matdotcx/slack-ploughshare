@@ -4,14 +4,16 @@ This directory contains utility scripts for Slack Ploughshare operations.
 
 ## add_test_channels.py
 
-Add fake test channels to the analysis file to verify warning messages.
+Add test channels to the analysis file to verify warning messages.
 
 **Purpose:**
-Test that each category (very_old, dormant, never_used) receives the correct warning message without affecting real channels.
+Test that each category (very_old, dormant, never_used) receives the correct warning message.
 
 **Usage:**
 
-Add test channels:
+### Option 1: Fake Channel IDs (safest - won't post to real channels)
+
+Add test channels with fake IDs:
 ```bash
 python3 scripts/add_test_channels.py --create-test-channels
 ```
@@ -26,12 +28,47 @@ Test warnings (dry run):
 python slack_channel_analytics.py --send-warnings
 ```
 
-Remove test channels when done:
+**Note:** Fake channel IDs start with `TEST_` and won't post messages to real channels. The script will fail to send to them, but you can verify the correct message template is attempted for each category in the logs.
+
+### Option 2: Real Channel IDs (posts actual test messages)
+
+**Step 1:** Create test channels in Slack:
+- `#test-very-old-warning`
+- `#test-dormant-warning`
+- `#test-never-used-warning`
+
+**Step 2a:** Auto-fetch channel IDs from Slack:
+```bash
+python3 scripts/add_test_channels.py --create-test-channels --with-real-channels
+```
+
+**Step 2b:** Or manually specify channel IDs:
+```bash
+python3 scripts/add_test_channels.py --create-test-channels \
+  --very-old-id C123456 --dormant-id C234567 --never-used-id C345678
+```
+
+**Step 3:** Test warnings (dry run first):
+```bash
+python slack_channel_analytics.py --send-warnings
+python slack_channel_analytics.py --send-warnings --for-real
+```
+
+**Step 4:** Check Slack to verify correct messages were posted to each test channel
+
+**Benefits of real channels:**
+- See actual messages posted to Slack
+- Verify message formatting and content
+- Test full end-to-end flow
+
+### Clean Up
+
+Remove test channels from analysis when done:
 ```bash
 python3 scripts/add_test_channels.py --remove-test-channels
 ```
 
-**Note:** These channel IDs are fake (start with `TEST_`) and won't post messages to real channels. The script will fail to send to them, but you can verify the correct message is attempted for each category in the logs.
+This removes both fake (`TEST_*`) and real test channel entries.
 
 ## undo_warnings.py
 
