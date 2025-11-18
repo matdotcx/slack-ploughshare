@@ -1,0 +1,65 @@
+name: "Manual: Join Bot to All Channels"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "CONFIRM" to join bot to all public channels'
+        required: true
+        type: string
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      confirmed: ${{ steps.check.outputs.confirmed }}
+    steps:
+      - name: Validate confirmation
+        id: check
+        run: |
+          if [ "${{ inputs.confirm }}" = "CONFIRM" ]; then
+            echo "confirmed=true" >> $GITHUB_OUTPUT
+            echo "Confirmation received - proceeding with channel join"
+          else
+            echo "confirmed=false" >> $GITHUB_OUTPUT
+            echo "ERROR: Must type CONFIRM to proceed"
+            exit 1
+          fi
+
+  join-channels:
+    needs: validate
+    if: needs.validate.outputs.confirmed == 'true'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install slack-sdk python-dotenv pyyaml
+
+      - name: Configure environment
+        run: |
+          echo "SLACK_USER_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" > .env
+
+      - name: Join bot to all channels
+        run: |
+          python slack_channel_analytics.py --join-channels --for-real
+
+      - name: Generate summary
+        if: always()
+        run: |
+          echo "## Bot Channel Join Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The bot has been added to all public channels." >> $GITHUB_STEP_SUMMARY
+          echo "You can now send warnings to channels." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Next Step:** Run 'Manual: Execute - Send Warnings' to send warnings to inactive channels" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u)" >> $GITHUB_STEP_SUMMARY
