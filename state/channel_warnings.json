@@ -7,7 +7,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:40.849296",
       "warning_message_ts": "1763488960.773439",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:05.510535",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -18,11 +18,13 @@
       "warned_at": "2025-11-18T18:02:41.352924",
       "archive_scheduled_for": "2025-12-18T18:02:41.352924",
       "warning_message_ts": "1763488961.276159",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:21:05.928609",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "C7PEE7HTK": {
       "channel_name": "ac2-automation",
@@ -45,7 +47,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:42.341556",
       "warning_message_ts": "1763488962.262009",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:06.264885",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -57,7 +59,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:42.826032",
       "warning_message_ts": "1763488962.748879",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:04.641645",
+      "last_reaction_check": "2025-11-22T13:21:06.597285",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -69,7 +71,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:43.340074",
       "warning_message_ts": "1763488963.240829",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:06.926475",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -81,7 +83,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:43.902952",
       "warning_message_ts": "1763488963.810619",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:07.263757",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -93,7 +95,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:44.403657",
       "warning_message_ts": "1763488964.320419",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:07.599831",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -105,7 +107,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:44.910389",
       "warning_message_ts": "1763488964.828619",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:07.914752",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -116,11 +118,13 @@
       "warned_at": "2025-11-18T18:02:45.407248",
       "archive_scheduled_for": "2025-12-18T18:02:45.407248",
       "warning_message_ts": "1763488965.319669",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:21:08.256107",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "C2QU5K491": {
       "channel_name": "altiris",
@@ -129,7 +133,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:45.889211",
       "warning_message_ts": "1763488965.809869",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:07.056946",
+      "last_reaction_check": "2025-11-22T13:21:08.563472",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -141,7 +145,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:46.376437",
       "warning_message_ts": "1763488966.300679",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:07.495560",
+      "last_reaction_check": "2025-11-22T13:21:08.910981",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -153,7 +157,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:46.901228",
       "warning_message_ts": "1763488966.810369",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:07.903586",
+      "last_reaction_check": "2025-11-22T13:21:09.226130",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -165,7 +169,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:47.401405",
       "warning_message_ts": "1763488967.324029",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:08.449373",
+      "last_reaction_check": "2025-11-22T13:21:09.559824",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -177,7 +181,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:47.907348",
       "warning_message_ts": "1763488967.826379",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:08.890485",
+      "last_reaction_check": "2025-11-22T13:21:09.888004",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -189,7 +193,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:48.400683",
       "warning_message_ts": "1763488968.316789",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:10.202074",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -201,7 +205,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:48.909656",
       "warning_message_ts": "1763488968.827939",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:09.723831",
+      "last_reaction_check": "2025-11-22T13:21:10.545144",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -213,7 +217,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:49.398912",
       "warning_message_ts": "1763488969.321539",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:10.865225",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -225,7 +229,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:49.890567",
       "warning_message_ts": "1763488969.810999",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:10.592673",
+      "last_reaction_check": "2025-11-22T13:21:11.196883",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -237,7 +241,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:50.395978",
       "warning_message_ts": "1763488970.313759",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:10.970040",
+      "last_reaction_check": "2025-11-22T13:21:11.514061",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -249,7 +253,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:50.881198",
       "warning_message_ts": "1763488970.803779",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:11.400011",
+      "last_reaction_check": "2025-11-22T13:21:11.827822",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -261,7 +265,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:51.361194",
       "warning_message_ts": "1763488971.284929",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:12.144946",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -273,7 +277,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:51.855298",
       "warning_message_ts": "1763488971.772469",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:12.201297",
+      "last_reaction_check": "2025-11-22T13:21:12.453876",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -285,7 +289,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:52.349577",
       "warning_message_ts": "1763488972.268809",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:12.620390",
+      "last_reaction_check": "2025-11-22T13:21:12.763949",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -297,7 +301,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:52.847566",
       "warning_message_ts": "1763488972.767239",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:12.985038",
+      "last_reaction_check": "2025-11-22T13:21:13.072609",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -309,7 +313,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:53.350441",
       "warning_message_ts": "1763488973.274739",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:13.440363",
+      "last_reaction_check": "2025-11-22T13:21:13.387096",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -321,7 +325,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:53.865172",
       "warning_message_ts": "1763488973.756459",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:13.705280",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -333,7 +337,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:54.360150",
       "warning_message_ts": "1763488974.278659",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:14.024229",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -345,7 +349,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:54.926224",
       "warning_message_ts": "1763488974.838639",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:14.892619",
+      "last_reaction_check": "2025-11-22T13:21:14.349263",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -357,7 +361,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:55.417007",
       "warning_message_ts": "1763488975.339029",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:15.325138",
+      "last_reaction_check": "2025-11-22T13:21:14.661087",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -369,7 +373,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:55.904049",
       "warning_message_ts": "1763488975.825409",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:15.738203",
+      "last_reaction_check": "2025-11-22T13:21:14.973354",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -381,7 +385,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:56.390611",
       "warning_message_ts": "1763488976.310479",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:16.117524",
+      "last_reaction_check": "2025-11-22T13:21:15.286757",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -392,11 +396,13 @@
       "warned_at": "2025-11-18T18:02:56.879774",
       "archive_scheduled_for": "2025-12-18T18:02:56.879774",
       "warning_message_ts": "1763488976.797529",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:21:15.600456",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "C07MWEATX": {
       "channel_name": "bsdpy",
@@ -405,7 +411,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:57.387155",
       "warning_message_ts": "1763488977.306429",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:16.942491",
+      "last_reaction_check": "2025-11-22T13:21:15.923109",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -417,7 +423,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:57.891295",
       "warning_message_ts": "1763488977.803379",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:17.360474",
+      "last_reaction_check": "2025-11-22T13:21:16.790705",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -429,7 +435,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:58.376768",
       "warning_message_ts": "1763488978.297979",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:17.919267",
+      "last_reaction_check": "2025-11-22T13:21:17.106546",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -441,7 +447,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:58.861045",
       "warning_message_ts": "1763488978.783399",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:18.320956",
+      "last_reaction_check": "2025-11-22T13:21:17.447375",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -453,7 +459,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:59.357084",
       "warning_message_ts": "1763488979.275189",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:18.776030",
+      "last_reaction_check": "2025-11-22T13:21:17.762565",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -465,7 +471,7 @@
       "archive_scheduled_for": "2025-12-18T18:02:59.844679",
       "warning_message_ts": "1763488979.764279",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:19.138040",
+      "last_reaction_check": "2025-11-22T13:21:18.084319",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -477,7 +483,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:00.359038",
       "warning_message_ts": "1763488980.267069",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:18.398771",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -489,7 +495,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:00.835883",
       "warning_message_ts": "1763488980.760249",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:19.966325",
+      "last_reaction_check": "2025-11-22T13:21:18.710962",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -501,7 +507,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:01.355972",
       "warning_message_ts": "1763488981.277619",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:19.026614",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -513,7 +519,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:01.864137",
       "warning_message_ts": "1763488981.782379",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:20.739302",
+      "last_reaction_check": "2025-11-22T13:21:19.340867",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -525,7 +531,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:02.349530",
       "warning_message_ts": "1763488982.270119",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:21.194276",
+      "last_reaction_check": "2025-11-22T13:21:19.657493",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -537,7 +543,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:02.840439",
       "warning_message_ts": "1763488982.760519",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:21.620211",
+      "last_reaction_check": "2025-11-22T13:21:19.977206",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -549,7 +555,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:03.341866",
       "warning_message_ts": "1763488983.258199",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:22.040889",
+      "last_reaction_check": "2025-11-22T13:21:20.293316",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -561,7 +567,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:03.835340",
       "warning_message_ts": "1763488983.755269",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:20.609912",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -573,7 +579,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:04.337010",
       "warning_message_ts": "1763488984.253279",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:20.929136",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -585,7 +591,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:04.872133",
       "warning_message_ts": "1763488984.786889",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:21.240489",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -597,7 +603,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:05.377555",
       "warning_message_ts": "1763488985.293399",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:21.571967",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -609,7 +615,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:05.874915",
       "warning_message_ts": "1763488985.790159",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:21.888656",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -621,7 +627,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:06.368687",
       "warning_message_ts": "1763488986.286439",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:24.488727",
+      "last_reaction_check": "2025-11-22T13:21:22.200197",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -633,7 +639,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:06.894343",
       "warning_message_ts": "1763488986.775959",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:24.894343",
+      "last_reaction_check": "2025-11-22T13:21:22.513961",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -659,7 +665,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:07.868475",
       "warning_message_ts": "1763488987.784109",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:22.832535",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -671,7 +677,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:08.375975",
       "warning_message_ts": "1763488988.294929",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:25.733460",
+      "last_reaction_check": "2025-11-22T13:21:23.145737",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -683,7 +689,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:08.891491",
       "warning_message_ts": "1763488988.810789",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:23.458229",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -695,7 +701,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:09.380138",
       "warning_message_ts": "1763488989.302969",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:23.774454",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -707,7 +713,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:09.866460",
       "warning_message_ts": "1763488989.787849",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:24.084290",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -719,7 +725,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:10.375053",
       "warning_message_ts": "1763488990.292429",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:24.764397",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -731,7 +737,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:10.871003",
       "warning_message_ts": "1763488990.789939",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:27.760151",
+      "last_reaction_check": "2025-11-22T13:21:25.088309",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -743,7 +749,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:11.364956",
       "warning_message_ts": "1763488991.285909",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:25.409977",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -754,11 +760,13 @@
       "warned_at": "2025-11-18T18:03:11.851439",
       "archive_scheduled_for": "2025-12-18T18:03:11.851439",
       "warning_message_ts": "1763488991.773159",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:21:25.729707",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "CHGV8RFTL": {
       "channel_name": "foxpass",
@@ -767,7 +775,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:12.345636",
       "warning_message_ts": "1763488992.262839",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:26.046569",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -779,7 +787,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:12.844978",
       "warning_message_ts": "1763488992.762659",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:29.333805",
+      "last_reaction_check": "2025-11-22T13:21:26.382533",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -805,7 +813,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:13.822114",
       "warning_message_ts": "1763488993.742459",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:29.758241",
+      "last_reaction_check": "2025-11-22T13:21:26.700154",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -817,7 +825,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:14.318082",
       "warning_message_ts": "1763488994.232699",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:27.012006",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -829,7 +837,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:14.848876",
       "warning_message_ts": "1763488994.746559",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:30.582242",
+      "last_reaction_check": "2025-11-22T13:21:27.329854",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -841,7 +849,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:15.334287",
       "warning_message_ts": "1763488995.258179",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:27.640519",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -853,7 +861,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:15.843711",
       "warning_message_ts": "1763488995.766979",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:27.952389",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -865,7 +873,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:16.341571",
       "warning_message_ts": "1763488996.261569",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:31.762802",
+      "last_reaction_check": "2025-11-22T13:21:28.269406",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -876,11 +884,13 @@
       "warned_at": "2025-11-18T18:03:16.837672",
       "archive_scheduled_for": "2025-12-18T18:03:16.837672",
       "warning_message_ts": "1763488996.763029",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:21:28.581879",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "C02BFE7BBS6": {
       "channel_name": "hello-app",
@@ -889,7 +899,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:17.383920",
       "warning_message_ts": "1763488997.295469",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:28.894976",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -901,7 +911,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:17.879761",
       "warning_message_ts": "1763488997.795579",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:32.882323",
+      "last_reaction_check": "2025-11-22T13:21:29.207355",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -913,7 +923,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:18.374743",
       "warning_message_ts": "1763488998.298459",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:29.525068",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -925,7 +935,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:18.884961",
       "warning_message_ts": "1763488998.806269",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:29.843432",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -950,11 +960,13 @@
       "warned_at": "2025-11-18T18:03:19.865598",
       "archive_scheduled_for": "2025-12-18T18:03:19.865598",
       "warning_message_ts": "1763488999.782219",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:21:30.157048",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "CL8UB94AZ": {
       "channel_name": "incidentresponse",
@@ -963,7 +975,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:20.427965",
       "warning_message_ts": "1763489000.343119",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:34.498218",
+      "last_reaction_check": "2025-11-22T13:21:30.466626",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -975,7 +987,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:20.967324",
       "warning_message_ts": "1763489000.872829",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:30.775683",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -987,7 +999,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:21.497351",
       "warning_message_ts": "1763489001.409659",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:35.331780",
+      "last_reaction_check": "2025-11-22T13:21:31.084196",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -999,7 +1011,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:22.060798",
       "warning_message_ts": "1763489001.970989",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:35.755031",
+      "last_reaction_check": "2025-11-22T13:21:31.400735",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1011,7 +1023,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:22.591009",
       "warning_message_ts": "1763489002.512229",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:36.170519",
+      "last_reaction_check": "2025-11-22T13:21:31.715795",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1023,7 +1035,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:23.095719",
       "warning_message_ts": "1763489003.014399",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:36.584660",
+      "last_reaction_check": "2025-11-22T13:21:32.029126",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1035,7 +1047,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:23.602554",
       "warning_message_ts": "1763489003.515859",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:36.997769",
+      "last_reaction_check": "2025-11-22T13:21:32.360979",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1047,7 +1059,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:24.099981",
       "warning_message_ts": "1763489004.018339",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:32.672297",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1059,7 +1071,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:24.584039",
       "warning_message_ts": "1763489004.506309",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:32.983507",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1071,7 +1083,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:25.076045",
       "warning_message_ts": "1763489004.997529",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:38.163682",
+      "last_reaction_check": "2025-11-22T13:21:33.302578",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1083,7 +1095,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:25.589148",
       "warning_message_ts": "1763489005.495589",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:38.527639",
+      "last_reaction_check": "2025-11-22T13:21:33.617197",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1095,7 +1107,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:26.090881",
       "warning_message_ts": "1763489006.009279",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:33.939886",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1107,7 +1119,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:26.568699",
       "warning_message_ts": "1763489006.495529",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:34.258648",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1119,7 +1131,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:27.065264",
       "warning_message_ts": "1763489006.988929",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:34.578487",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1131,7 +1143,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:27.565143",
       "warning_message_ts": "1763489007.481899",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:35.874964",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1143,7 +1155,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:28.055548",
       "warning_message_ts": "1763489007.978219",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:40.505978",
+      "last_reaction_check": "2025-11-22T13:21:36.185069",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1155,7 +1167,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:28.567735",
       "warning_message_ts": "1763489008.482869",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:36.498136",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1181,7 +1193,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:29.597109",
       "warning_message_ts": "1763489009.516209",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:41.320087",
+      "last_reaction_check": "2025-11-22T13:21:36.819296",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1193,7 +1205,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:30.211156",
       "warning_message_ts": "1763489010.110709",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:41.744633",
+      "last_reaction_check": "2025-11-22T13:21:37.131881",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1205,7 +1217,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:30.775442",
       "warning_message_ts": "1763489010.692419",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:37.442750",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1217,7 +1229,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:31.272889",
       "warning_message_ts": "1763489011.187899",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:37.753850",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1229,7 +1241,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:31.784788",
       "warning_message_ts": "1763489011.699159",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:38.145570",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1241,7 +1253,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:32.298601",
       "warning_message_ts": "1763489012.216909",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:43.321334",
+      "last_reaction_check": "2025-11-22T13:21:38.467232",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1253,7 +1265,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:32.814092",
       "warning_message_ts": "1763489012.728599",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:43.740259",
+      "last_reaction_check": "2025-11-22T13:21:38.775254",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1265,7 +1277,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:33.304577",
       "warning_message_ts": "1763489013.225319",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:44.172710",
+      "last_reaction_check": "2025-11-22T13:21:39.091848",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1291,7 +1303,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:34.283795",
       "warning_message_ts": "1763489014.205739",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:44.542474",
+      "last_reaction_check": "2025-11-22T13:21:39.409211",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1303,7 +1315,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:34.779571",
       "warning_message_ts": "1763489014.701779",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:39.720537",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1315,7 +1327,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:35.281628",
       "warning_message_ts": "1763489015.201689",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:45.359812",
+      "last_reaction_check": "2025-11-22T13:21:40.038100",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1327,7 +1339,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:35.829657",
       "warning_message_ts": "1763489015.736799",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:45.734947",
+      "last_reaction_check": "2025-11-22T13:21:40.364958",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1339,7 +1351,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:36.319341",
       "warning_message_ts": "1763489016.237279",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:46.155417",
+      "last_reaction_check": "2025-11-22T13:21:40.689667",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1351,7 +1363,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:36.845462",
       "warning_message_ts": "1763489016.746849",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:41.003786",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1363,7 +1375,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:37.377158",
       "warning_message_ts": "1763489017.280539",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:46.879470",
+      "last_reaction_check": "2025-11-22T13:21:41.352980",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1375,7 +1387,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:38.465034",
       "warning_message_ts": "1763489018.284099",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:47.327004",
+      "last_reaction_check": "2025-11-22T13:21:41.663846",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1387,7 +1399,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:38.951472",
       "warning_message_ts": "1763489018.871249",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:41.977778",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1399,7 +1411,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:39.470171",
       "warning_message_ts": "1763489019.381899",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:42.294243",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1411,7 +1423,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:39.954785",
       "warning_message_ts": "1763489019.876479",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:48.633977",
+      "last_reaction_check": "2025-11-22T13:21:42.608026",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1423,7 +1435,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:40.457717",
       "warning_message_ts": "1763489020.376469",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:42.933826",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1435,7 +1447,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:40.955622",
       "warning_message_ts": "1763489020.872849",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:49.451143",
+      "last_reaction_check": "2025-11-22T13:21:43.250544",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1447,7 +1459,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:41.451035",
       "warning_message_ts": "1763489021.365629",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:49.893258",
+      "last_reaction_check": "2025-11-22T13:21:43.564266",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1473,7 +1485,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:43.647578",
       "warning_message_ts": "1763489023.568449",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:50.309752",
+      "last_reaction_check": "2025-11-22T13:21:43.882456",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1485,7 +1497,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:44.160768",
       "warning_message_ts": "1763489024.077149",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:44.212401",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1497,7 +1509,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:44.665070",
       "warning_message_ts": "1763489024.582779",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:51.126029",
+      "last_reaction_check": "2025-11-22T13:21:44.524681",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1509,7 +1521,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:45.252700",
       "warning_message_ts": "1763489025.165879",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:44.834112",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1521,7 +1533,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:45.740781",
       "warning_message_ts": "1763489025.664029",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:45.160230",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1533,7 +1545,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:46.236930",
       "warning_message_ts": "1763489026.154919",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:45.473373",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1545,7 +1557,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:46.720103",
       "warning_message_ts": "1763489026.646499",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:45.792190",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1557,7 +1569,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:47.213466",
       "warning_message_ts": "1763489027.125969",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:46.098338",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1569,7 +1581,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:47.711342",
       "warning_message_ts": "1763489027.627629",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:53.410479",
+      "last_reaction_check": "2025-11-22T13:21:46.412847",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1581,7 +1593,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:48.205080",
       "warning_message_ts": "1763489028.123919",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:53.774622",
+      "last_reaction_check": "2025-11-22T13:21:46.722779",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1592,11 +1604,13 @@
       "warned_at": "2025-11-18T18:03:48.696788",
       "archive_scheduled_for": "2025-12-18T18:03:48.696788",
       "warning_message_ts": "1763489028.617069",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:21:47.034515",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "CJB6C4BDW": {
       "channel_name": "mrmacintoshblog",
@@ -1605,7 +1619,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:49.180023",
       "warning_message_ts": "1763489029.103419",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:47.342969",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1617,7 +1631,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:49.676748",
       "warning_message_ts": "1763489029.598579",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:55.012061",
+      "last_reaction_check": "2025-11-22T13:21:47.660807",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1629,7 +1643,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:50.174306",
       "warning_message_ts": "1763489030.085279",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:47.973288",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1641,7 +1655,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:50.655048",
       "warning_message_ts": "1763489030.579269",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:55.849047",
+      "last_reaction_check": "2025-11-22T13:21:48.281898",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1653,7 +1667,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:51.140963",
       "warning_message_ts": "1763489031.067139",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:48.600798",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1665,7 +1679,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:51.634963",
       "warning_message_ts": "1763489031.556109",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:56.618232",
+      "last_reaction_check": "2025-11-22T13:21:48.920917",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1677,7 +1691,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:52.142528",
       "warning_message_ts": "1763489032.060369",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:57.044771",
+      "last_reaction_check": "2025-11-22T13:21:50.210540",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1689,7 +1703,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:52.622366",
       "warning_message_ts": "1763489032.542729",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:50.525554",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1701,7 +1715,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:53.125314",
       "warning_message_ts": "1763489033.039449",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:57.873618",
+      "last_reaction_check": "2025-11-22T13:21:50.834861",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1713,7 +1727,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:53.605795",
       "warning_message_ts": "1763489033.528849",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:51.148086",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1725,7 +1739,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:54.131483",
       "warning_message_ts": "1763489034.043789",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:58.645890",
+      "last_reaction_check": "2025-11-22T13:21:51.467064",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1737,7 +1751,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:54.611621",
       "warning_message_ts": "1763489034.531259",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:59.027436",
+      "last_reaction_check": "2025-11-22T13:21:51.786488",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1749,7 +1763,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:55.114993",
       "warning_message_ts": "1763489035.030609",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:59.450713",
+      "last_reaction_check": "2025-11-22T13:21:52.099858",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1761,7 +1775,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:55.603427",
       "warning_message_ts": "1763489035.524069",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:04:59.871230",
+      "last_reaction_check": "2025-11-22T13:21:52.416719",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1773,7 +1787,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:56.109179",
       "warning_message_ts": "1763489036.031459",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:52.732651",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1785,7 +1799,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:56.604374",
       "warning_message_ts": "1763489036.522209",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:53.053226",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1797,7 +1811,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:57.102917",
       "warning_message_ts": "1763489037.020129",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:01.097104",
+      "last_reaction_check": "2025-11-22T13:21:53.363579",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1809,7 +1823,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:57.603991",
       "warning_message_ts": "1763489037.513349",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:01.556676",
+      "last_reaction_check": "2025-11-22T13:21:53.683826",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1835,7 +1849,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:58.582933",
       "warning_message_ts": "1763489038.503549",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:02.225619",
+      "last_reaction_check": "2025-11-22T13:21:53.999685",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1847,7 +1861,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:59.081204",
       "warning_message_ts": "1763489038.996849",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:02.657771",
+      "last_reaction_check": "2025-11-22T13:21:54.318175",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1859,7 +1873,7 @@
       "archive_scheduled_for": "2025-12-18T18:03:59.576975",
       "warning_message_ts": "1763489039.500559",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:54.633866",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1871,7 +1885,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:00.099546",
       "warning_message_ts": "1763489040.003579",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:03.516286",
+      "last_reaction_check": "2025-11-22T13:21:54.952246",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1883,7 +1897,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:00.582966",
       "warning_message_ts": "1763489040.507649",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:03.894617",
+      "last_reaction_check": "2025-11-22T13:21:55.267509",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1909,7 +1923,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:01.572038",
       "warning_message_ts": "1763489041.490209",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:55.586983",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1921,7 +1935,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:02.090296",
       "warning_message_ts": "1763489041.998879",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:04.703497",
+      "last_reaction_check": "2025-11-22T13:21:55.898302",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1933,7 +1947,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:02.588350",
       "warning_message_ts": "1763489042.504949",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:05.136670",
+      "last_reaction_check": "2025-11-22T13:21:56.217541",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1945,7 +1959,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:03.071224",
       "warning_message_ts": "1763489042.993569",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:05.554689",
+      "last_reaction_check": "2025-11-22T13:21:56.526289",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1957,7 +1971,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:03.556021",
       "warning_message_ts": "1763489043.477549",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:56.836707",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1983,7 +1997,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:04.549619",
       "warning_message_ts": "1763489044.465799",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:06.370891",
+      "last_reaction_check": "2025-11-22T13:21:57.150428",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -1995,7 +2009,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:05.044566",
       "warning_message_ts": "1763489044.964149",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:06.735018",
+      "last_reaction_check": "2025-11-22T13:21:57.462062",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2006,11 +2020,13 @@
       "warned_at": "2025-11-18T18:04:05.548941",
       "archive_scheduled_for": "2025-12-18T18:04:05.548941",
       "warning_message_ts": "1763489045.465089",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:21:57.778840",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "C8845CY5C": {
       "channel_name": "samacadmins",
@@ -2019,7 +2035,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:06.032827",
       "warning_message_ts": "1763489045.948369",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:07.503826",
+      "last_reaction_check": "2025-11-22T13:21:58.092459",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2031,7 +2047,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:06.519570",
       "warning_message_ts": "1763489046.439619",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:07.950162",
+      "last_reaction_check": "2025-11-22T13:21:58.412279",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2043,7 +2059,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:07.020522",
       "warning_message_ts": "1763489046.942509",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:21:58.735653",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2055,7 +2071,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:07.516494",
       "warning_message_ts": "1763489047.436719",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:08.772833",
+      "last_reaction_check": "2025-11-22T13:21:59.053175",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2095,7 +2111,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:08.988084",
       "warning_message_ts": "1763489048.905879",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:09.199423",
+      "last_reaction_check": "2025-11-22T13:21:59.379549",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2107,7 +2123,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:09.477031",
       "warning_message_ts": "1763489049.397379",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:09.621095",
+      "last_reaction_check": "2025-11-22T13:21:59.688876",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2119,7 +2135,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:09.973571",
       "warning_message_ts": "1763489049.894089",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:00.009275",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2131,7 +2147,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:10.482898",
       "warning_message_ts": "1763489050.398749",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:10.446432",
+      "last_reaction_check": "2025-11-22T13:22:00.320544",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2143,7 +2159,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:10.980555",
       "warning_message_ts": "1763489050.898409",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:00.643236",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2155,7 +2171,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:11.455686",
       "warning_message_ts": "1763489051.378949",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:11.263237",
+      "last_reaction_check": "2025-11-22T13:22:00.957255",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2167,7 +2183,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:11.962655",
       "warning_message_ts": "1763489051.884059",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:11.718012",
+      "last_reaction_check": "2025-11-22T13:22:01.277235",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2178,11 +2194,13 @@
       "warned_at": "2025-11-18T18:04:12.477360",
       "archive_scheduled_for": "2025-12-18T18:04:12.477360",
       "warning_message_ts": "1763489052.399349",
-      "saved_by_reaction": false,
-      "last_reaction_check": null,
-      "reactions_found": [],
+      "saved_by_reaction": true,
+      "last_reaction_check": "2025-11-22T13:22:01.605155",
+      "reactions_found": [
+        "+1"
+      ],
       "archived_at": null,
-      "status": "warned"
+      "status": "saved"
     },
     "CUF1XSAS1": {
       "channel_name": "syncromsp",
@@ -2191,7 +2209,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:12.970930",
       "warning_message_ts": "1763489052.891539",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:01.924880",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2203,7 +2221,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:13.457698",
       "warning_message_ts": "1763489053.383549",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:12.875005",
+      "last_reaction_check": "2025-11-22T13:22:02.239844",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2215,7 +2233,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:13.960234",
       "warning_message_ts": "1763489053.877479",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:13.305259",
+      "last_reaction_check": "2025-11-22T13:22:02.551731",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2227,7 +2245,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:14.444994",
       "warning_message_ts": "1763489054.364279",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:13.720504",
+      "last_reaction_check": "2025-11-22T13:22:02.858652",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2239,7 +2257,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:14.934207",
       "warning_message_ts": "1763489054.857669",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:14.092151",
+      "last_reaction_check": "2025-11-22T13:22:03.219843",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2251,7 +2269,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:15.417807",
       "warning_message_ts": "1763489055.342079",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:14.453591",
+      "last_reaction_check": "2025-11-22T13:22:03.545273",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2263,7 +2281,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:15.932455",
       "warning_message_ts": "1763489055.844759",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:03.861243",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2275,7 +2293,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:16.450211",
       "warning_message_ts": "1763489056.367619",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:04.174062",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2287,7 +2305,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:16.961268",
       "warning_message_ts": "1763489056.875689",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:04.482453",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2299,7 +2317,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:17.448552",
       "warning_message_ts": "1763489057.370299",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:15.975595",
+      "last_reaction_check": "2025-11-22T13:22:04.804207",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2311,7 +2329,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:17.947862",
       "warning_message_ts": "1763489057.861189",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:16.405479",
+      "last_reaction_check": "2025-11-22T13:22:05.117429",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2323,7 +2341,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:18.453335",
       "warning_message_ts": "1763489058.369499",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:05.430434",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2335,7 +2353,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:18.947422",
       "warning_message_ts": "1763489058.865069",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:17.186833",
+      "last_reaction_check": "2025-11-22T13:22:05.745194",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2347,7 +2365,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:19.472915",
       "warning_message_ts": "1763489059.391189",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:06.057647",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2359,7 +2377,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:19.947411",
       "warning_message_ts": "1763489059.872399",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:18.111082",
+      "last_reaction_check": "2025-11-22T13:22:06.372433",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2371,7 +2389,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:20.442505",
       "warning_message_ts": "1763489060.352319",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:06.687839",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2383,7 +2401,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:20.944301",
       "warning_message_ts": "1763489060.861819",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:18.948186",
+      "last_reaction_check": "2025-11-22T13:22:06.997171",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2395,7 +2413,7 @@
       "archive_scheduled_for": "2025-12-18T18:04:21.423569",
       "warning_message_ts": "1763489061.347929",
       "saved_by_reaction": false,
-      "last_reaction_check": null,
+      "last_reaction_check": "2025-11-22T13:22:07.311780",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
@@ -2407,14 +2425,14 @@
       "archive_scheduled_for": "2025-12-18T18:04:21.904946",
       "warning_message_ts": "1763489061.827249",
       "saved_by_reaction": false,
-      "last_reaction_check": "2025-11-22T13:05:19.726479",
+      "last_reaction_check": "2025-11-22T13:22:07.644795",
       "reactions_found": [],
       "archived_at": null,
       "status": "warned"
     }
   },
   "metadata": {
-    "last_updated": "2025-11-22T13:05:19.726485",
+    "last_updated": "2025-11-22T13:22:07.644803",
     "total_warnings_sent": 199
   }
 }
