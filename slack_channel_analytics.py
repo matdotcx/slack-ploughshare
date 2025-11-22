@@ -809,6 +809,103 @@ class ChannelAnalyzer:
             print(f"[ERROR] Failed to send report to Slack: {e.response['error']}")
             return False
 
+    def send_reactions_check_to_slack(self, results, dry_run=True):
+        """Send reactions check results to Slack channel."""
+        reporting_config = self.config.get("reporting", {})
+        enabled = reporting_config.get("send_to_slack", False)
+        report_channel = reporting_config.get("slack_channel")
+
+        if not enabled:
+            return False
+
+        if not report_channel:
+            print("[WARNING] Slack reporting enabled but no channel configured")
+            return False
+
+        checked = results.get("checked", 0)
+        saved = results.get("saved", 0)
+        saved_channels = results.get("saved_channels", [])
+
+        # Build the message using Slack's Block Kit
+        blocks = [
+            {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Reaction Check Results"
+                }
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Check Date:*\n{datetime.now().strftime('%Y-%m-%d %H:%M UTC')}"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Channels Checked:*\n{checked}"
+                    }
+                ]
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Saved by Reactions:*\n{saved} channel{'s' if saved != 1 else ''}"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Still at Risk:*\n{checked - saved} channel{'s' if (checked - saved) != 1 else ''}"
+                    }
+                ]
+            }
+        ]
+
+        # Add list of saved channels if any
+        if saved > 0:
+            channel_list = "\n".join([f"• <#{ch['id']}>" for ch in saved_channels])
+            blocks.extend([
+                {
+                    "type": "divider"
+                },
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": f"*Channels Saved:*\n{channel_list}"
+                    }
+                }
+            ])
+        else:
+            blocks.append({
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "No channels were saved by reactions this check."
+                    }
+                ]
+            })
+
+        try:
+            if dry_run:
+                print(f"[DRY RUN] Would send reactions check to Slack channel: {report_channel}")
+                print(f"  Summary: {checked} checked, {saved} saved")
+                return True
+            else:
+                response = self.client.chat_postMessage(
+                    channel=report_channel,
+                    text=f"Reaction Check: {checked} channels checked, {saved} saved by reactions",
+                    blocks=blocks
+                )
+                print(f"[SUCCESS] Sent reactions check to Slack channel: {report_channel}")
+                return True
+        except SlackApiError as e:
+            print(f"[ERROR] Failed to send reactions check to Slack: {e.response['error']}")
+            return False
+
     def get_warning_tracker_stats(self):
         """Get statistics from the warning tracker."""
         channels = self.warning_tracker.data.get("channels", {})
@@ -1341,12 +1438,13 @@ class ChannelAnalyzer:
 
         if not warned:
             print("[INFO] No warned channels to check")
-            return
+            return {"checked": 0, "saved": 0, "saved_channels": []}
 
         print(f"[INFO] Checking reactions on {len(warned)} warned channels...")
 
         saved_count = 0
         checked_count = 0
+        saved_channels = []
 
         for channel_id, data in warned.items():
             message_ts = data.get("warning_message_ts")
@@ -1358,6 +1456,10 @@ class ChannelAnalyzer:
                 channel_id, message_ts, data["channel_name"]
             ):
                 saved_count += 1
+                saved_channels.append({
+                    "id": channel_id,
+                    "name": data["channel_name"]
+                })
             checked_count += 1
 
             time.sleep(0.2)  # Rate limiting
@@ -1365,6 +1467,12 @@ class ChannelAnalyzer:
         print(
             f"\n[SUMMARY] Checked: {checked_count}, Saved by reactions: {saved_count}"
         )
+
+        return {
+            "checked": checked_count,
+            "saved": saved_count,
+            "saved_channels": saved_channels
+        }
 
     def auto_warn_new_channels(self, dry_run=True):
         """
@@ -1675,7 +1783,13 @@ def main():
         elif arg == "--check-reactions":
             print("[INFO] Checking reactions on warned channels...")
             analyzer = ChannelAnalyzer(token, config)
-            analyzer.check_all_warned_channels()
+            results = analyzer.check_all_warned_channels()
+
+            # Send results to Slack
+            reporting_config = config.get("reporting", {})
+            if reporting_config.get("send_to_slack", False):
+                analyzer.send_reactions_check_to_slack(results, dry_run=False)
+
             return
         elif arg == "--auto-warn":
             dry_run = "--for-real" not in sys.argv
