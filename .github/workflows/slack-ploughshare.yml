@@ -137,14 +137,14 @@ jobs:
       - name: Configure environment
         run: |
           # Use different tokens for different operations:
-          # - Analysis operations need USER token (can read all channel history)
+          # - Analysis/read operations need USER token (can read all channel history and reactions)
           # - Warning/archive operations need BOT token (has chat:write.public)
 
           COMMAND="${{ steps.determine-command.outputs.command }}"
 
-          if [[ "$COMMAND" == "full-analysis" ]] || [[ "$COMMAND" == "warning-report" ]]; then
+          if [[ "$COMMAND" == "full-analysis" ]] || [[ "$COMMAND" == "warning-report" ]] || [[ "$COMMAND" == "check-reactions" ]]; then
             echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_USER_TOKEN }}" > .env
-            echo "[INFO] Using USER token for analysis (can read all channel history)"
+            echo "[INFO] Using USER token for analysis/reactions (can read all channel history)"
           else
             echo "SLACK_BOT_TOKEN=${{ secrets.SLACK_BOT_TOKEN }}" > .env
             echo "[INFO] Using BOT token for warnings/archive (has chat:write.public)"
