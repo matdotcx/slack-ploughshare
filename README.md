@@ -40,24 +40,42 @@ pip install slack-sdk python-dotenv pyyaml
 3. Create a Slack App:
    - Go to https://api.slack.com/apps
    - Create a new app
-   - Add the following User Token Scopes:
+   - Add the following **Bot Token Scopes**:
+     - `channels:read` - View basic information about public channels
+     - `chat:write` - Send messages as bot
+     - `chat:write.public` - Send messages to channels bot is not a member of
+   - Add the following **User Token Scopes**:
      - `channels:read` - View basic information about public channels
      - `channels:history` - View messages in public channels
-     - `users:read` - View people in the workspace
-     - `chat:write` - Send messages (for warnings)
      - `reactions:read` - Check for reactions on warning messages
+     - `users:read` - View people in the workspace
    - Optional: Add `groups:read` and `groups:history` for private channels (requires bot to be added to each channel)
    - Install the app to your workspace
+   - **Important**: You will need BOTH tokens:
+     - **Bot Token** (xoxb-...) - Used for sending warnings and archives
+     - **User Token** (xoxp-...) - Used for reading channel history and checking reactions
 
 4. Create `.env` file:
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and add your token:
+Edit `.env` and add your tokens:
 ```
+# Use Bot Token for sending warnings/archives (requires chat:write.public)
 SLACK_BOT_TOKEN=xoxb-your-bot-token-here
+
+# OR use User Token for analysis and reaction checks (requires channels:history and reactions:read)
+# SLACK_BOT_TOKEN=xoxp-your-user-token-here
+
+# For GitHub Actions: Configure both tokens as repository secrets
+# SLACK_BOT_TOKEN - Bot token (xoxb-...)
+# SLACK_USER_TOKEN - User token (xoxp-...)
 ```
+
+**Note**: The tool automatically selects the appropriate token:
+- Analysis operations (`--full-analysis`, `--warning-report`, `--check-reactions`) use the User Token
+- Warning/archive operations (`--auto-warn`, `--auto-archive`, `--send-warnings`) use the Bot Token
 
 5. Configure settings (optional):
 ```bash
