@@ -826,6 +826,11 @@ class ChannelAnalyzer:
         saved = results.get("saved", 0)
         saved_channels = results.get("saved_channels", [])
 
+        # Get tracker stats for total counts
+        tracker_stats = self.get_warning_tracker_stats()
+        total_saved = tracker_stats["saved"]
+        total_warned = tracker_stats["warned"]
+
         # Build the message using Slack's Block Kit
         blocks = [
             {
@@ -844,7 +849,7 @@ class ChannelAnalyzer:
                     },
                     {
                         "type": "mrkdwn",
-                        "text": f"*Channels Checked:*\n{checked}"
+                        "text": f"*Channels Checked:*\n{checked} warned"
                     }
                 ]
             },
@@ -853,17 +858,30 @@ class ChannelAnalyzer:
                 "fields": [
                     {
                         "type": "mrkdwn",
-                        "text": f"*Saved by Reactions:*\n{saved} channel{'s' if saved != 1 else ''}"
+                        "text": f"*Newly Saved This Check:*\n{saved} channel{'s' if saved != 1 else ''}"
                     },
                     {
                         "type": "mrkdwn",
-                        "text": f"*Still at Risk:*\n{checked - saved} channel{'s' if (checked - saved) != 1 else ''}"
+                        "text": f"*Total Saved (All Time):*\n{total_saved} channel{'s' if total_saved != 1 else ''}"
+                    }
+                ]
+            },
+            {
+                "type": "section",
+                "fields": [
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Still Warned:*\n{total_warned} channel{'s' if total_warned != 1 else ''}"
+                    },
+                    {
+                        "type": "mrkdwn",
+                        "text": f"*Total Tracked:*\n{tracker_stats['total_tracked']} channels"
                     }
                 ]
             }
         ]
 
-        # Add list of saved channels if any
+        # Add list of newly saved channels if any
         if saved > 0:
             channel_list = "\n".join([f"• <#{ch['id']}>" for ch in saved_channels])
             blocks.extend([
@@ -874,7 +892,7 @@ class ChannelAnalyzer:
                     "type": "section",
                     "text": {
                         "type": "mrkdwn",
-                        "text": f"*Channels Saved:*\n{channel_list}"
+                        "text": f"*Newly Saved Channels:*\n{channel_list}"
                     }
                 }
             ])
@@ -884,7 +902,7 @@ class ChannelAnalyzer:
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": "No channels were saved by reactions this check."
+                        "text": f"No new saves this check. {total_saved} channel{'s' if total_saved != 1 else ''} previously saved remain protected."
                     }
                 ]
             })
@@ -892,12 +910,12 @@ class ChannelAnalyzer:
         try:
             if dry_run:
                 print(f"[DRY RUN] Would send reactions check to Slack channel: {report_channel}")
-                print(f"  Summary: {checked} checked, {saved} saved")
+                print(f"  Summary: {checked} checked, {saved} newly saved, {total_saved} total saved")
                 return True
             else:
                 response = self.client.chat_postMessage(
                     channel=report_channel,
-                    text=f"Reaction Check: {checked} channels checked, {saved} saved by reactions",
+                    text=f"Reaction Check: {checked} channels checked, {saved} newly saved ({total_saved} total saved)",
                     blocks=blocks
                 )
                 print(f"[SUCCESS] Sent reactions check to Slack channel: {report_channel}")
