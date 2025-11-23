@@ -574,6 +574,25 @@ Make sure your token has the `channels:read` scope and you're using `include_num
 
 Contributions welcome! Please open an issue or PR.
 
+### Repository Synchronisation
+
+This project maintains two Git remotes:
+- **macadminsdotorg/slack-ploughshare** - Production deployment with state tracking
+- **matdotcx/slack-ploughshare** - Development fork without state files
+
+When contributing code changes, please sync them to both repositories. See [SYNC.md](SYNC.md) for detailed synchronisation instructions.
+
+Quick sync:
+```bash
+# After committing code changes to origin (macadminsdotorg)
+./sync-repos.sh  # Syncs latest commit to matdotcx
+
+# Or sync specific commits
+./sync-repos.sh <commit-hash>
+```
+
+The sync script automatically skips state-only commits and handles the cherry-pick process.
+
 ## License
 
 MIT License - See LICENSE file for details
